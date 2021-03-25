@@ -59,8 +59,17 @@ class User
 			}
 		    	
 		}
-		void issue_book(int userID, int book_ID)
-		{
-			
 }
+
+class Student : public User
+{
+	private:
+		int userID;
+                int book_ID;
+                char name[20];
+                char password[6];
+                char choice;
+	public:
+		void issue_book(int userID, int bookID)
+		{
 
