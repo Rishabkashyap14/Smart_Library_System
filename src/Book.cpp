@@ -58,68 +58,156 @@ class Book
 int Book::add_book()
 {
 	cout<<"\nNEW BOOK ENTRY...\n";
-	cout<<"\nEnter The Book Identity number:"<<endl;//should this be generated
+	cout<<"Enter The Book Identity number:\n";//should this be generated
 	cin>>book_id;
-	cout<<"\n\nEnter The Name of The Book:"<<endl;
+	cin.ignore();
+	cout<<"Enter The Name of The Book:\n";
 	getline(cin,book_name);
-	cout<<"\nEnter The Name of The Author:"<<endl;
+	cout<<"Enter The Name of The Author:\n";
 	getline(cin,author);
-	cout<<"\nEnter The Number of Copies:"<<endl;
+	cout<<"Enter The Number of Copies:\n";
 	cin>>number_of_copies;
+	cin.ignore();
 	if(number_of_copies>0)
 		availability=1;
-	cout<<"\n\nEnter Description:"<<endl;
+	cout<<"Enter Description:\n";
 	getline(cin,description);
+
 	sqlite3 *db;
-   char *zErrMsg = 0;
-   int rc;
-   std::ostringstream sql;
-   std::string command;
-
-   /* Open database */
-   rc = sqlite3_open("book.db", &db);
-   
-   if( rc ) {
-      fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-      return(0);
-   } else {
-      fprintf(stderr, "Opened database successfully\n");
-   }
-
-   /* Create SQL statement */
-   sql<<"INSERT INTO BOOKS VALUES (" <<book_id<< ", '" 
+	char *zErrMsg = 0;
+	int rc;
+	std::ostringstream sql;
+	std::string command;
+	/* Open database */
+   	rc = sqlite3_open("book.db", &db);
+   	if( rc ) 
+	{
+		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+		return(0);
+	} 
+	else 
+		fprintf(stderr, "Opened database successfully\n");
+	/* Create SQL statement */
+	sql<<"INSERT INTO BOOKS VALUES (" <<book_id<< ", '" 
 						 <<book_name<<"','"
 						 <<author<<"','"
 						 <<description<<"',"
 						 <<number_of_copies<<")";
-   command=sql.str();
-   /* Execute SQL statement */
-   rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);
-   
-   if( rc != SQLITE_OK ){
-      fprintf(stderr, "SQL error: %s\n", zErrMsg);
-      sqlite3_free(zErrMsg);
-   } else {
-      fprintf(stdout, "Records created successfully\n");
-   }
-   sqlite3_close(db);
+	command=sql.str();
+	/* Execute SQL statement */
+	rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
+	if( rc != SQLITE_OK )
+	{
+		fprintf(stderr, "SQL error: %s\n", zErrMsg);
+		sqlite3_free(zErrMsg);
+	} 
+	else
+		fprintf(stdout, "Records created successfully\n");
+	sqlite3_close(db);
 	return 0;//add other codes for error handling
 }
-/*int Book::remove_book()
+
+int Book::remove_book()
 {
+	cout<<"\nDELETE A BOOK ENTRY...\n";
+	cout<<"Enter The Book Identity number:\n";//should this be generated
+	cin>>book_id;
+	cin.ignore();
+	sqlite3 *db;
+	char *zErrMsg = 0;
+	int rc;
+	std::ostringstream sql;
+	std::string command;
+	/* Open database */
+   	rc = sqlite3_open("book.db", &db);
+   	if( rc ) 
+	{
+		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+		return(0);
+	} 
+	else 
+		fprintf(stderr, "Opened database successfully\n");
+	/* Create SQL statement */
+	sql<<"DELETE FROM BOOKS WHERE Book_Id="<<book_id;
+	command=sql.str();
+	/* Execute SQL statement */
+	rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
+	if( rc != SQLITE_OK )
+	{
+		fprintf(stderr, "SQL error: %s\n", zErrMsg);
+		sqlite3_free(zErrMsg);
+	} 
 	return 0;
 }
 
 int Book::modify_book()
 {
+	cout<<"\nMODIFY BOOK INFORMATION...\n";
+	cout<<"Enter The Book Identity number:\n";//should this be generated
+	cin>>book_id;
+	cin.ignore();
+	sqlite3 *db;
+	char *zErrMsg = 0;
+	int rc;
+	std::ostringstream sql;
+	std::string command;
+	/* Open database */
+   	rc = sqlite3_open("book.db", &db);
+   	if( rc ) 
+	{
+		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+		return(0);
+	} 
+	else 
+		fprintf(stderr, "Opened database successfully\n");
+	/* Create SQL statement */
+	cout<<""
+	sql<<"SELECT * FROM BOOKS WHERE Book_Id="<<book_id;
+	command=sql.str();
+	/* Execute SQL statement */
+	rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
+	if( rc != SQLITE_OK )
+	{
+		fprintf(stderr, "SQL error: %s\n", zErrMsg);
+		sqlite3_free(zErrMsg);
+	} 
+	return 0;
 	return 0;
 }
 
-int print_info()
+int Book::print_info()
 {
+	cout<<"\nPRINT BOOK INFORMATION...\n";
+	cout<<"Enter The Book Identity number:\n";//should this be generated
+	cin>>book_id;
+	cin.ignore();
+	sqlite3 *db;
+	char *zErrMsg = 0;
+	int rc;
+	std::ostringstream sql;
+	std::string command;
+	/* Open database */
+   	rc = sqlite3_open("book.db", &db);
+   	if( rc ) 
+	{
+		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+		return(0);
+	} 
+	else 
+		fprintf(stderr, "Opened database successfully\n");
+	/* Create SQL statement */
+	sql<<"SELECT * FROM BOOKS WHERE Book_Id="<<book_id;
+	command=sql.str();
+	/* Execute SQL statement */
+	rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
+	if( rc != SQLITE_OK )
+	{
+		fprintf(stderr, "SQL error: %s\n", zErrMsg);
+		sqlite3_free(zErrMsg);
+	} 
 	return 0;
 }
-class Issue: public Book, public User
+/*class Issue: public Book, public User
 {
 	private:
 		char *issue_date;
@@ -181,9 +269,12 @@ int Reserve::Reserve_Book()
 {
 	return 0;
 }*/
+
 int main()
 {
 	Book b;
 	int x=b.add_book();
+	//int y=b.remove_book();
+	int z=b.print_info();
 	return 0;
 }
