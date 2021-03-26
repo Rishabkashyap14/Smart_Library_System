@@ -92,4 +92,29 @@ int Issue::User_Books()
 	return 0;
 }
 /*----------------------------------------------------------------------------------------------------------------------------------------*/
+class Return: public Book, public User
+{
+	private:
+		int transaction_id;
+		char *return_date;
+	public:
+		Return()
+		{
+			return_date="";
+			transaction_id=0;
+		}
+		int Fine();
+		
+		//Extra Function
+		int Return_Book();//to update database
+}
+int Return::Fine()
+{
+	return 0;
+}
+int Return::Return_Book()
+{
+	return 0;
+}
+/*-----------------------------------------------------------------------------------------------------------------------------------------*/
 
