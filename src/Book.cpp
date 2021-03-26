@@ -84,7 +84,7 @@ class Issue: public Book, public User
 			issue_date="";
 			return_date="";
 			transaction_id=0;
-		}
+		};
 		int User_Books();//Return Transaction id?
 }
 int Issue::User_Books()
@@ -102,7 +102,7 @@ class Return: public Book, public User
 		{
 			return_date="";
 			transaction_id=0;
-		}
+		};
 		int Fine();
 		
 		//Extra Function
@@ -127,7 +127,7 @@ class Reserve: public Book, public User
 		{
 			book_id=0;
 			user_id=0;
-		}
+		};
 		int Reserve_Book();
 }
 int Reserve::Reserve_Book()

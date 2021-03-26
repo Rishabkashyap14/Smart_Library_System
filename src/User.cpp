@@ -110,3 +110,28 @@ class Student : public User
 	public:
 		void issue_book(int userID, int bookID)
 		{
+		};
+		void return_book()
+		{
+		};
+		void reserve_book()
+		{
+		};
+}
+
+class Administrator : public User
+{
+	public:
+		void Register_user();
+		void Add_book_details();
+		void Calculate_fine();
+}
+
+class Librarian : public User
+{
+	public:
+		void Add_new();
+		void Remove_book();
+		void Update_book();
+		void Issue_book();
+}
