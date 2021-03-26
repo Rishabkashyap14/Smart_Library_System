@@ -1,6 +1,7 @@
 #include<iostream>
 #include<iomanip>
 #include<string.h>
+#include<exception>
 
 using namespace std;
 
@@ -10,8 +11,9 @@ class User
     		int userID;
 		int book_ID;
     		char name[20];
-    		char password[6];
+    		char password[10];
     		char choice;
+		int attempt;
 	public:
 		void create_user(void)
 		{
@@ -59,7 +61,43 @@ class User
 			}
 		    	
 		}
+
+		int authenticate_user(int userID, char* password)
+		{
+			attempt = 0;
+			cout<<"Enter the userID:"<<endl;
+			cin>>userID;
+			//Error Handling
+			while(1)
+			{
+				if(cin.fail())
+				{
+					cin.clear();
+					cin.ignore(numeric_limits<streamsize>::max, '\n');
+					cout<<"You have entered an invalid input, try again:"<<endl;
+					cin>>userID;
+					attempt++;
+				}
+				if(!cin.fail && attempt<3)
+					break;
+				if(attempt>1)
+				{
+					cout<<"Three incorrect tries, cannot proceed"<<endl;
+					exit(0);
+				}
+			}
+			//Successful UserID entered
+			//Try-Catch for wrong password, (Need more test cases)
+			try{
+				cout<<"Enter the password"<<endl;
+				cin>>password;
+			}
+			catch(bad_alloc& e){
+				cout<<e.what()<<"Invalid password size"<<endl;
+			}
+		}
 }
+
 
 class Student : public User
 {
@@ -67,9 +105,8 @@ class Student : public User
 		int userID;
                 int book_ID;
                 char name[20];
-                char password[6];
+                char password[10];
                 char choice;
 	public:
 		void issue_book(int userID, int bookID)
 		{
-
