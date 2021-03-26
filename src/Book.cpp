@@ -110,7 +110,9 @@ class Return: public Book, public User
 }
 int Return::Fine()
 {
-	return 0;
+	int number_of_days=0;
+	//Write Code to get number of days
+	return number_of_days*2;
 }
 int Return::Return_Book()
 {
