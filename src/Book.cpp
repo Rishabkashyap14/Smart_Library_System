@@ -71,4 +71,25 @@ int print_info()
 {
 	return 0;
 }
+/*----------------------------------------------------------------------------------------------------------------------------------------*/
+class Issue: public Book, public User
+{
+	private:
+		char *issue_date;
+		char *return_date;
+		int transaction_id;
+	public:
+		Issue()
+		{
+			issue_date="";
+			return_date="";
+			transaction_id=0;
+		}
+		int User_Books();//Return Transaction id?
+}
+int Issue::User_Books()
+{
+	return 0;
+}
+/*----------------------------------------------------------------------------------------------------------------------------------------*/
 
