@@ -187,8 +187,10 @@ int Book::modify_book()
 			cout<<"Modified number of copies:\n";
 			cin>>number_of_copies;
 			cin.ignore();
-			sql<<"UPDATE BOOKS SET Copies="<<number_of_copies<<"WHERE Book_Id="<<book_id;
-			break;		
+			sql<<"UPDATE BOOKS SET Copies="<<number_of_copies<<" WHERE Book_Id="<<book_id;
+			break;	
+		default:
+			break;	
 	}
 	command=sql.str();
 	/* Execute SQL statement */
@@ -233,6 +235,7 @@ int Book::print_info()
 	} 
 	return 0;
 }
+/*------------------------------------------------------------------------------------------------------------------------------------------*/
 /*class Issue: public Book, public User
 {
 	private:
@@ -299,9 +302,15 @@ int Reserve::Reserve_Book()
 int main()
 {
 	Book b;
-	//int x=b.add_book();
-	//int y=b.remove_book();
+	/*int x=b.add_book();
+	int y=b.remove_book();
+	x=b.add_book();
 	int z=b.print_info();
+	x=b.add_book();
+	z=b.print_info();*/
 	int w=b.modify_book();
+	int z=b.print_info();
+	/*y=b.remove_book();
+	z=b.print_info();*/
 	return 0;
 }

@@ -1,0 +1,34 @@
+CREATE TABLE BOOKS(
+Book_id NUMERIC(10) NOT NULL,
+Book_name VARCHAR(50) NOT NULL,
+Author CHAR(20) NOT NULL,
+Description VARCHAR(100),
+Copies NUMERIC(10) NOT NULL,
+PRIMARY KEY (Book_id)
+);
+INSERT INTO BOOKS VALUES
+    -> (1000000001, 'The Wheel of Time - The Eye of the World', 'Robert Jordan', 'The wheel weaves as the wheel wills', 10),
+    -> (1000000002, 'Percy Jackson - The Lightning Thief', 'Rick Riordan', 'Anaklusmos and blue food', 25),
+    -> (1000000003, 'The Maze Runner', 'James Dashner', 'Follow the laws of the Glade, WCKD is good', 15);
+
+CREATE TABLE USERS(
+User_id NUMERIC(10) NOT NULL,
+User_name VARCHAR(30) NOT NULL,
+Password VARCHAR(15) NOT NULL,
+UserType VARCHAR(15) NOT NULL,
+Book_id NUMERIC(10) NOT NULL,
+PRIMARY KEY (User_id),
+FOREIGN KEY (Book_id) REFERENCES BOOKS(Book_id)
+);
+
+CREATE TABLE TRANSACTIONS(
+Transaction_id NUMERIC(10) NOT NULL,
+Status VARCHAR(10) NOT NULL,
+Date DATETIME NOT NULL,
+User_id NUMERIC(10) NOT NULL,
+Book_id NUMERIC(10) NOT NULL,
+PRIMARY KEY (Transaction_id),
+FOREIGN KEY (User_id) REFERENCES USERS(User_id),
+FOREIGN KEY (Book_id) REFERENCES BOOKS(Book_id)
+);
+
