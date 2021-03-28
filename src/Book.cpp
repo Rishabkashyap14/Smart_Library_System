@@ -161,8 +161,37 @@ int Book::modify_book()
 	else 
 		fprintf(stderr, "Opened database successfully\n");
 	/* Create SQL statement */
-	cout<<""
-	sql<<"SELECT * FROM BOOKS WHERE Book_Id="<<book_id;
+	int choice;
+	cout<<"Which Detail must be modified:\n";
+	cout<<"1. Name of the Book 2. Author 3. Description 4. Number of Copies\n";
+	cin>>choice;
+	cin.ignore();
+	switch(choice)
+	{
+		case 1:
+			cout<<"Modified name:\n";
+			getline(cin,book_name);
+			sql<<"UPDATE BOOKS SET Book_name='"<<book_name<<"' WHERE Book_Id="<<book_id;
+			break;
+		case 2:
+			cout<<"Modified name:\n";
+			getline(cin,author);
+			sql<<"UPDATE BOOKS SET Author='"<<author<<"' WHERE Book_Id="<<book_id;
+			break;
+		case 3:
+			cout<<"Modified description:\n";
+			getline(cin,description);
+			sql<<"UPDATE BOOKS SET Description='"<<description<<"' WHERE Book_Id="<<book_id;
+			break;
+		case 4:
+			cout<<"Modified number of copies:\n";
+			cin>>number_of_copies;
+			cin.ignore();
+			sql<<"UPDATE BOOKS SET Copies="<<number_of_copies<<" WHERE Book_Id="<<book_id;
+			break;	
+		default:
+			break;	
+	}
 	command=sql.str();
 	/* Execute SQL statement */
 	rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
@@ -171,7 +200,6 @@ int Book::modify_book()
 		fprintf(stderr, "SQL error: %s\n", zErrMsg);
 		sqlite3_free(zErrMsg);
 	} 
-	return 0;
 	return 0;
 }
 
@@ -207,6 +235,7 @@ int Book::print_info()
 	} 
 	return 0;
 }
+/*------------------------------------------------------------------------------------------------------------------------------------------*/
 /*class Issue: public Book, public User
 {
 	private:
@@ -273,8 +302,15 @@ int Reserve::Reserve_Book()
 int main()
 {
 	Book b;
-	int x=b.add_book();
-	//int y=b.remove_book();
+	/*int x=b.add_book();
+	int y=b.remove_book();
+	x=b.add_book();
 	int z=b.print_info();
+	x=b.add_book();
+	z=b.print_info();*/
+	int w=b.modify_book();
+	int z=b.print_info();
+	/*y=b.remove_book();
+	z=b.print_info();*/
 	return 0;
 }

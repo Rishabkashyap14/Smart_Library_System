@@ -15,6 +15,17 @@ class User
     		char choice;
 		int attempt;
 	public:
+		//Constructor
+		User()
+		{
+			userID=0;
+			bookID=0;
+			name="Unknown";
+			password="``````````"
+			choice='$';
+			attempt=0;
+		};
+
 		void create_user(void)
 		{
 		    	cout<<"\nNEW USER ENTRY...\n";
