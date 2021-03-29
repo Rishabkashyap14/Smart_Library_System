@@ -50,25 +50,22 @@ int User::authenticate_user(int userID, string password)
 int User::create_user(void)
 {
 	cout<<"\nNEW USER ENTRY...\n";
-	cout<<"\nEnter The User Identity number:"<<endl;
+	cout<<"Enter The User Identity number:"<<endl;
 	cin>>userID;
 	cin.ignore();
-	cout<<"\n\nEnter The Name of The User:"<<endl;
+	cout<<"Enter The Name of The User:\n";
 	getline(cin,name);
-	cin.ignore();
-	cout<<"\n\nEnter The Name of The User:\n";
-	cin>>name;
-	cin.ignore();
-	cout<<"\n\nEnter The new password:\n";
+	//cin.ignore();
+	cout<<"Enter The New Password:\n";
 	cin>>password;
 	cin.ignore();
 	cout<<"Enter your email address:\n";
 	cin>>email;
 	cin.ignore();
-	cout<<"\n\nEnter The type of User:\n";
+	cout<<"Enter The type of User:\n";
 	cin>>Utype;
 	cin.ignore();
-	authenticate_user(userID, password);
+	//authenticate_user(userID, password);
 		    	
 	sqlite3 *db;
 	char *zErrMsg = 0;
@@ -84,7 +81,7 @@ int User::create_user(void)
 	} 
 	else 
 		fprintf(stderr, "Opened database successfully\n");
-	sql<<"INSERT INTO USER VALUES ("<<userID<<", '"<<name<<"', '"<<password<<"', '"<<email<<"', '"<<Utype<<"');";
+	sql<<"INSERT INTO USERS VALUES ("<<userID<<", '"<<name<<"', '"<<password<<"', '"<<email<<"', '"<<Utype<<"')";
 	command=sql.str();
 	rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
 	if( rc != SQLITE_OK )
@@ -200,3 +197,4 @@ class Librarian : public User
 		void Update_book();
 		void Issue_book();
 };
+/*--------------------------------------------------------------------------------------------------------------------------------------------*/

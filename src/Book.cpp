@@ -255,18 +255,3 @@ int Reserve::Reserve_Book()
 	return 0;
 }*/
 
-int main()
-{
-	Book b;
-	/*int x=b.add_book();
-	int y=b.remove_book();
-	x=b.add_book();
-	int z=b.print_info();
-	x=b.add_book();
-	z=b.print_info();*/
-	int w=b.modify_book();
-	int z=b.print_info();
-	/*y=b.remove_book();
-	z=b.print_info();*/
-	return 0;
-}
