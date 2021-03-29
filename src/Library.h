@@ -1,6 +1,36 @@
 #include <iostream>
 
-static int callback(void* data, int argc, char** argv, char** azColName);
+int callback(void* data, int argc, char** argv, char** azColName);
+
+class User
+{
+	private:
+    		int userID;
+		int bookID;
+    		std::string name;
+    		std::string password;
+    		std::string email;
+    		std::string Utype;
+    		char choice;
+		int attempt;
+	public:
+		//Constructor
+		User()
+		{
+			userID=0;
+			bookID=0;
+			name="Unknown";
+			password="``````````";
+			email="Unknown";
+			Utype = "None";
+			choice='$';
+			attempt=0;
+		};
+		int create_user(void);
+		void show_user(void);
+		int modify_user(void);
+		int authenticate_user(int userID, std::string password);
+};
 
 class Book
 {
