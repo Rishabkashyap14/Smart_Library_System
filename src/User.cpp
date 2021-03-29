@@ -96,13 +96,37 @@ int User::create_user(void)
 		cout<<"\n\nNew User Record Created!";
 	}
 
-void User::show_user(void)
+int User::show_user(void)
 {
-	cout<<"Enter the user ID:"<<endl;
+	cout<<"\nPRINT USER INFORMATION...\n";
+	cout<<"Enter The User Identity number:\n";//should this be generated
 	cin>>userID;
-	//Search SQL databasefor the same
-	cout<<"\nUser Identity number: "<<userID;
-	cout<<"\nUser Name :"<<name<<endl;
+	cin.ignore();
+	sqlite3 *db;
+	char *zErrMsg = 0;
+	int rc;
+	std::ostringstream sql;
+	std::string command;
+	/* Open database */
+   	rc = sqlite3_open("book.db", &db);
+   	if( rc ) 
+	{
+		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+		return(0);
+	} 
+	else 
+		fprintf(stderr, "Opened database successfully\n");
+	/* Create SQL statement */
+	sql<<"SELECT User_id,User_name,Email,UserType FROM USERS WHERE User_id="<<userID;
+	command=sql.str();
+	/* Execute SQL statement */
+	rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
+	if( rc != SQLITE_OK )
+	{
+		fprintf(stderr, "SQL error: %s\n", zErrMsg);
+		sqlite3_free(zErrMsg);
+	} 
+	return 0;
 }
 
 int User::modify_user(void)

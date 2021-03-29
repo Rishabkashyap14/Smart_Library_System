@@ -27,7 +27,7 @@ class User
 			attempt=0;
 		};
 		int create_user(void);
-		void show_user(void);
+		int show_user(void);
 		int modify_user(void);
 		int authenticate_user(int userID, std::string password);
 };
