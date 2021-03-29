@@ -12,6 +12,8 @@ class User
 		int book_ID;
     		char name[20];
     		char password[10];
+    		char email[20];
+    		char Utype[20];
     		char choice;
 		int attempt;
 	public:
@@ -21,7 +23,9 @@ class User
 			userID=0;
 			bookID=0;
 			name="Unknown";
-			password="``````````"
+			password="``````````";
+			email="Unknown";
+			Utpe = "None";
 			choice='$';
 			attempt=0;
 		};
@@ -31,8 +35,47 @@ class User
 		    	cout<<"\nNEW USER ENTRY...\n";
 		    	cout<<"\nEnter The User Identity number:"<<endl;
 		    	cin>>userID;
-		    	cout<<"\n\nEnter The Name of The User:"<<endl;
-		    	fgets(name);
+		    	cin.ignore();
+		    	cout<<"\n\nEnter The Name of The User:\n";
+		    	cin>>name;
+		    	cin.ignore();
+		    	cout<<"\n\nEnter The new password:\n";
+		    	cin>>password;
+		    	cin.ignore();
+		    	cout<<"Enter your email address:\n";
+		    	cin>>email;
+		    	cin.ignore();
+		    	cout<<"\n\nEnter The type of User:\n";
+		    	cin>>Utype;
+		    	cin.ignore();
+		    	authenticate_user(userID, pasword);
+		    	
+		    	sqlite3 *db;
+			char *zErrMsg = 0;
+			int rc;
+			std::ostringstream sql;
+			std::string command;
+			/* Open database */
+		   	rc = sqlite3_open("book.db", &db);
+		   	if(rc) 
+			{
+				fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+				return(0);
+			} 
+			else 
+				fprintf(stderr, "Opened database successfully\n");
+			sql<<"INSERT INTO USER VALUES ("<<user_ID<<", '"<<name<<"', '"<<password<<"', '"<<email<<"', '"<<Utype<<"');";
+			command=sql.str();
+			rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
+			if( rc != SQLITE_OK )
+			{
+				fprintf(stderr, "SQL error: %s\n", zErrMsg);
+				sqlite3_free(zErrMsg);
+			} 
+			else
+				fprintf(stdout, "Records created successfully\n");
+			sqlite3_close(db);
+			return 0;
 		    	cout<<"\n\nNew User Record Created!";
 		}
 
@@ -49,27 +92,53 @@ class User
 		{
 			cout<<"Enter the user ID:"<<endl;
 			cin>>userID;
-			//Search SQL databasefor the same
-		    	cout<<"\nUser Identification Number: "<<UserID;
-		    	cout<<"\nModify User Name :"<<endl;
-			cin>>name;
-		    	cout<<"Do you wish to change password? Y/N"<<endl;
+		    	cout<<"What do you wish to change?\n1 - User name\n2 - Password\n3- Email\n4 - User Type\n5 - All Good, exit"<<endl;
 		    	cin>>choice;
-			switch(choice)
-			{
-				case 'Y':
-					cout<<"Enter the previous password:"<<endl;
-					//Compare with SQL query if the password matches
-					//If it matches do the below, else break
-					cout<<"Enter the new password"<<endl;
-					cin>>password;
-					break;
-				case 'N':
-					break;
-				default:
-					cout<<"Incorrect option, please try again"<<endl;
-					break;
+		    	while(1)
+		    	{
+				switch(choice)
+				{
+					case '1':
+						cout<<"Enter the new user name:\n";
+						cin>>name;
+						cin.ignore();
+						sqlite3 *db;
+						char *zErrMsg = 0;
+						int rc;
+						std::ostringstream sql;
+						std::string command;
+						rc = sqlite3_open("book.db", &db);
+					   	if( rc ) 
+						{
+							fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+							return(0);
+						} 
+						else 
+							fprintf(stderr, "Opened database successfully\n");
+						sql<<"UPDATE USER SET UserName = '"<<name<<"' WHERE UserID = "<<userID<<";";
+						command=sql.str();
+						rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
+						if( rc != SQLITE_OK )
+						{
+							fprintf(stderr, "SQL error: %s\n", zErrMsg);
+							sqlite3_free(zErrMsg);
+						}
+						break;
+					case 'Y':
+						cout<<"Enter the previous password:"<<endl;
+						//Compare with SQL query if the password matches
+						//If it matches do the below, else break
+						cout<<"Enter the new password"<<endl;
+						cin>>password;
+						break;
+					case 'N':
+						break;
+					default:
+						cout<<"Incorrect option, please try again"<<endl;
+						break;
+				}
 			}
+			
 		    	
 		}
 
@@ -114,13 +183,16 @@ class Student : public User
 {
 	private:
 		int userID;
-                int book_ID;
-                char name[20];
-                char password[10];
-                char choice;
+		int book_ID;
+		char name[20];
+		char password[10];
+		char choice;
 	public:
 		void issue_book(int userID, int bookID)
 		{
+			printf("Enter user password:\n");
+			//Check SQL query for password
+			//SQL query to remove book and add it to transaction table
 		};
 		void return_book()
 		{
