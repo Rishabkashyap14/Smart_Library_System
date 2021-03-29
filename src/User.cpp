@@ -21,7 +21,8 @@ class User
 			userID=0;
 			bookID=0;
 			name="Unknown";
-			password="``````````"
+			password="``````````";
+			type="Unknown";
 			choice='$';
 			attempt=0;
 		};
@@ -31,8 +32,9 @@ class User
 		    	cout<<"\nNEW USER ENTRY...\n";
 		    	cout<<"\nEnter The User Identity number:"<<endl;
 		    	cin>>userID;
+			cin.ignore();
 		    	cout<<"\n\nEnter The Name of The User:"<<endl;
-		    	fgets(name);
+		    	getline(cin,name);
 		    	cout<<"\n\nNew User Record Created!";
 		}
 
