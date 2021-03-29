@@ -18,6 +18,7 @@ int main()
 	//Testing for user class
 	User u;
 	//int a=u.create_user();
-	int b=u.show_user();
+	//int b=u.show_user();
+	int c=u.modify_user();
 	return 0;
 }
