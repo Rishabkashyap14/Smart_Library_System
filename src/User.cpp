@@ -2,180 +2,222 @@
 #include<iomanip>
 #include<string.h>
 #include<exception>
+#include<stdlib.h>
+#include<sstream>
+#include<ios>
+#include<sqlite3.h>
+#include<stdio.h>
+#include<limits>
+#include"Library.h"
 
 using namespace std;
 
-class User
+int User::authenticate_user(int userID, string password)
 {
-	private:
-    		int userID;
-		int book_ID;
-    		char name[20];
-    		char password[10];
-    		char email[20];
-    		char Utype[20];
-    		char choice;
-		int attempt;
-	public:
-		//Constructor
-		User()
+	attempt = 0;
+	cout<<"Enter the userID:"<<endl;
+	cin>>userID;
+	//Error Handling
+	while(1)
+	{
+		if(cin.fail())
 		{
-			userID=0;
-			bookID=0;
-			name="Unknown";
-			password="``````````";
-			email="Unknown";
-			Utpe = "None";
-			choice='$';
-			attempt=0;
-		};
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cout<<"You have entered an invalid input, try again:"<<endl;
+			cin>>userID;
+			attempt++;
+		}
+		if(!cin.fail() && attempt<3)
+			break;
+		if(attempt>1)
+		{
+			cout<<"Three incorrect tries, cannot proceed"<<endl;
+			exit(0);
+		}
+	}
+	//Successful UserID entered
+	//Try-Catch for wrong password, (Need more test cases)
+	try{
+		cout<<"Enter the password"<<endl;
+		cin>>password;
+	}
+	catch(bad_alloc& e){
+		cout<<e.what()<<"Invalid password size"<<endl;
+	}
+}
 
-		void create_user(void)
-		{
-		    	cout<<"\nNEW USER ENTRY...\n";
-		    	cout<<"\nEnter The User Identity number:"<<endl;
-		    	cin>>userID;
-		    	cin.ignore();
-		    	cout<<"\n\nEnter The Name of The User:\n";
-		    	cin>>name;
-		    	cin.ignore();
-		    	cout<<"\n\nEnter The new password:\n";
-		    	cin>>password;
-		    	cin.ignore();
-		    	cout<<"Enter your email address:\n";
-		    	cin>>email;
-		    	cin.ignore();
-		    	cout<<"\n\nEnter The type of User:\n";
-		    	cin>>Utype;
-		    	cin.ignore();
-		    	authenticate_user(userID, pasword);
+int User::create_user(void)
+{
+	cout<<"\nNEW USER ENTRY...\n";
+	cout<<"Enter The User Identity number:"<<endl;
+	cin>>userID;
+	cin.ignore();
+	cout<<"Enter The Name of The User:\n";
+	getline(cin,name);
+	//cin.ignore();
+	cout<<"Enter The New Password:\n";
+	cin>>password;
+	cin.ignore();
+	cout<<"Enter your email address:\n";
+	cin>>email;
+	cin.ignore();
+	cout<<"Enter The type of User:\n";
+	cin>>Utype;
+	cin.ignore();
+	//authenticate_user(userID, password);
 		    	
-		    	sqlite3 *db;
-			char *zErrMsg = 0;
-			int rc;
-			std::ostringstream sql;
-			std::string command;
-			/* Open database */
-		   	rc = sqlite3_open("book.db", &db);
-		   	if(rc) 
-			{
-				fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-				return(0);
-			} 
-			else 
-				fprintf(stderr, "Opened database successfully\n");
-			sql<<"INSERT INTO USER VALUES ("<<user_ID<<", '"<<name<<"', '"<<password<<"', '"<<email<<"', '"<<Utype<<"');";
-			command=sql.str();
-			rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
-			if( rc != SQLITE_OK )
-			{
-				fprintf(stderr, "SQL error: %s\n", zErrMsg);
-				sqlite3_free(zErrMsg);
-			} 
-			else
-				fprintf(stdout, "Records created successfully\n");
-			sqlite3_close(db);
-			return 0;
-		    	cout<<"\n\nNew User Record Created!";
-		}
+	sqlite3 *db;
+	char *zErrMsg = 0;
+	int rc;
+	std::ostringstream sql;
+	std::string command;
+	/* Open database */
+	rc = sqlite3_open("book.db", &db);
+	if(rc) 
+	{
+		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+		return(0);
+	} 
+	else 
+		fprintf(stderr, "Opened database successfully\n");
+	sql<<"INSERT INTO USERS VALUES ("<<userID<<", '"<<name<<"', '"<<password<<"', '"<<email<<"', '"<<Utype<<"')";
+	command=sql.str();
+	rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
+	if( rc != SQLITE_OK )
+	{
+		fprintf(stderr, "SQL error: %s\n", zErrMsg);
+		sqlite3_free(zErrMsg);
+	} 
+	else
+		fprintf(stdout, "Records created successfully\n");
+		sqlite3_close(db);
+		return 0;
+		cout<<"\n\nNew User Record Created!";
+	}
 
-		void show_user(void)
-		{
-			cout<<"Enter the user ID:"<<endl;
-			cin>>userID;
-			//Search SQL databasefor the same
-		    	cout<<"\nUser Identity number: "<<userID;
-		    	cout<<"\nUser Name :"<<name<<endl;
-		}
+int User::show_user(void)
+{
+	cout<<"\nPRINT USER INFORMATION...\n";
+	cout<<"Enter The User Identity number:\n";//should this be generated
+	cin>>userID;
+	cin.ignore();
+	sqlite3 *db;
+	char *zErrMsg = 0;
+	int rc;
+	std::ostringstream sql;
+	std::string command;
+	/* Open database */
+   	rc = sqlite3_open("book.db", &db);
+   	if( rc ) 
+	{
+		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+		return(0);
+	} 
+	else 
+		fprintf(stderr, "Opened database successfully\n");
+	/* Create SQL statement */
+	sql<<"SELECT User_id,User_name,Email,UserType FROM USERS WHERE User_id="<<userID;
+	command=sql.str();
+	/* Execute SQL statement */
+	rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
+	if( rc != SQLITE_OK )
+	{
+		fprintf(stderr, "SQL error: %s\n", zErrMsg);
+		sqlite3_free(zErrMsg);
+	} 
+	return 0;
+}
 
-		void modify_user(void)
+int User::modify_user(void)
+{
+	cout<<"Enter the user ID:"<<endl;
+	cin>>userID;
+	cout<<"What do you wish to change?\n1 - User name\n2 - Password\n3- Email\n4 - User Type\n5 - All Good, exit"<<endl;
+	cin>>choice;
+	//while(1)
+	//{
+		switch(choice)
 		{
-			cout<<"Enter the user ID:"<<endl;
-			cin>>userID;
-		    	cout<<"What do you wish to change?\n1 - User name\n2 - Password\n3- Email\n4 - User Type\n5 - All Good, exit"<<endl;
-		    	cin>>choice;
-		    	while(1)
-		    	{
-				switch(choice)
+			case '1':
+			{
+				cout<<"Enter the new user name:\n";
+				getline(cin,name);
+				cin.ignore();
+				sqlite3 *db;
+				char *zErrMsg = 0;
+				int rc;
+				std::ostringstream sql;
+				std::string command;
+				rc = sqlite3_open("book.db", &db);
+				if( rc ) 
 				{
-					case '1':
-						cout<<"Enter the new user name:\n";
-						cin>>name;
-						cin.ignore();
-						sqlite3 *db;
-						char *zErrMsg = 0;
-						int rc;
-						std::ostringstream sql;
-						std::string command;
-						rc = sqlite3_open("book.db", &db);
-					   	if( rc ) 
-						{
-							fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-							return(0);
-						} 
-						else 
-							fprintf(stderr, "Opened database successfully\n");
-						sql<<"UPDATE USER SET UserName = '"<<name<<"' WHERE UserID = "<<userID<<";";
-						command=sql.str();
-						rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
-						if( rc != SQLITE_OK )
-						{
-							fprintf(stderr, "SQL error: %s\n", zErrMsg);
-							sqlite3_free(zErrMsg);
-						}
-						break;
-					case 'Y':
-						cout<<"Enter the previous password:"<<endl;
-						//Compare with SQL query if the password matches
-						//If it matches do the below, else break
-						cout<<"Enter the new password"<<endl;
-						cin>>password;
-						break;
-					case 'N':
-						break;
-					default:
-						cout<<"Incorrect option, please try again"<<endl;
-						break;
+					fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+					return(0);
+				} 
+				else 
+					fprintf(stderr, "Opened database successfully\n");
+				sql<<"UPDATE USERS SET User_name = '"<<name<<"' WHERE User_id = "<<userID;
+				command=sql.str();
+				rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
+				if( rc != SQLITE_OK )
+				{
+					fprintf(stderr, "SQL error: %s\n", zErrMsg);
+					sqlite3_free(zErrMsg);
 				}
+				break;
 			}
-			
-		    	
-		}
-
-		int authenticate_user(int userID, char* password)
-		{
-			attempt = 0;
-			cout<<"Enter the userID:"<<endl;
-			cin>>userID;
-			//Error Handling
-			while(1)
+			case '2':
 			{
-				if(cin.fail())
-				{
-					cin.clear();
-					cin.ignore(numeric_limits<streamsize>::max, '\n');
-					cout<<"You have entered an invalid input, try again:"<<endl;
-					cin>>userID;
-					attempt++;
-				}
-				if(!cin.fail && attempt<3)
-					break;
-				if(attempt>1)
-				{
-					cout<<"Three incorrect tries, cannot proceed"<<endl;
-					exit(0);
-				}
-			}
-			//Successful UserID entered
-			//Try-Catch for wrong password, (Need more test cases)
-			try{
-				cout<<"Enter the password"<<endl;
+				cout<<"Enter the user name:\n";
+				getline(cin,name);
+				cin.ignore();
+				cout<<"Enter the previous password:"<<endl;
 				cin>>password;
+				cin.ignore();
+				sqlite3 *db;
+				char *zErrMsg = 0;
+				int rc;
+				std::ostringstream sql;
+				std::string command;
+				rc = sqlite3_open("book.db", &db);
+				if( rc ) 
+				{
+					fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+					return(0);
+				} 
+				else 
+					fprintf(stderr, "Opened database successfully\n");
+				sql<<"SELECT Password FROM USERS WHERE UserName = '"<<name<<"' AND UserID = "<<userID<<"AND Password = '"<<password<<"'";
+				command=sql.str();
+				rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
+				if( rc != SQLITE_OK )
+				{
+					fprintf(stderr, "SQL error: %s\n", zErrMsg);
+					sqlite3_free(zErrMsg);
+				}
+				if(rc!=SQLITE_NULL)
+				{
+					cout<<"Enter the new password"<<endl;
+					cin>>password;
+					cin.ignore();
+					sql<<"UPDATE USERS SET Password = '"<<password<<"' WHERE UserID = "<<userID<<";";
+					command=sql.str();
+					rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
+					if( rc != SQLITE_OK )
+					{
+						fprintf(stderr, "SQL error: %s\n", zErrMsg);
+						sqlite3_free(zErrMsg);
+					}
+				}
+				break;
 			}
-			catch(bad_alloc& e){
-				cout<<e.what()<<"Invalid password size"<<endl;
-			}
+
+			default:
+				cout<<"Incorrect option, please try again"<<endl;
+				break;
 		}
+	//}		    	
 }
 
 /*-------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -200,7 +242,7 @@ class Student : public User
 		void reserve_book()
 		{
 		};
-}
+};
 /*--------------------------------------------------------------------------------------------------------------------------------------------*/
 class Administrator : public User
 {
@@ -208,7 +250,7 @@ class Administrator : public User
 		void Register_user();
 		void Add_book_details();
 		void Calculate_fine();
-}
+};
 /*--------------------------------------------------------------------------------------------------------------------------------------------*/
 class Librarian : public User
 {
@@ -217,4 +259,5 @@ class Librarian : public User
 		void Remove_book();
 		void Update_book();
 		void Issue_book();
-}
+};
+/*--------------------------------------------------------------------------------------------------------------------------------------------*/

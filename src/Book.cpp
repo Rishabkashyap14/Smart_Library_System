@@ -7,53 +7,9 @@
 #include<exception>
 #include<stdlib.h>
 #include  <bits/stdc++.h>
+#include "Library.h"
 
 using namespace std;
-
-static int callback(void* data, int argc, char** argv, char** azColName)
-{
-    int i;
-    fprintf(stderr, "%s: ", (const char*)data);
-  
-    for (i = 0; i < argc; i++) {
-        printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
-    }
-  
-    printf("\n");
-    return 0;
-}
-
-class Book
-{
-	private:
-		//According to class diagram
-		int book_id;
-		string book_name;
-		string author;
-		int availability; //1 if available and 0 if not available
-
-		//Some other extra variables
-		string description;
-		int number_of_copies;
-
-	public:
-		//Constructor
-		Book()
-		{
-			book_id=0;
-			book_name="Unknown";
-			author="Unknown";
-			availability=0;
-			description="Unknown";
-			number_of_copies=0;
-		};
-
-		//Methods, need to deal with database for these:
-		int add_book();
-		int remove_book();
-		int modify_book();
-		int print_info();
-};
 
 int Book::add_book()
 {
@@ -299,18 +255,3 @@ int Reserve::Reserve_Book()
 	return 0;
 }*/
 
-int main()
-{
-	Book b;
-	/*int x=b.add_book();
-	int y=b.remove_book();
-	x=b.add_book();
-	int z=b.print_info();
-	x=b.add_book();
-	z=b.print_info();*/
-	int w=b.modify_book();
-	int z=b.print_info();
-	/*y=b.remove_book();
-	z=b.print_info();*/
-	return 0;
-}
