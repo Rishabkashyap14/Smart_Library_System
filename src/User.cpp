@@ -264,6 +264,9 @@ class Student : public User
 			printf("Enter user password:\n");
 			//authenticate_user(userID, password);
 			
+			cout<<"Enter the Book Name: \n:";
+			getline(cin, 
+			transaction_id++;
 			sqlite3 *db;
 			char *zErrMsg = 0;
 			int rc;
@@ -277,6 +280,7 @@ class Student : public User
 			} 
 			else 
 				fprintf(stderr, "Opened database successfully\n");
+			//Adding the new book into the BOOKS table
 			sql<<"SELECT Copies FROM BOOKS WHERE Book_id = '"<<bookID<<"';";
 			command=sql.str();
 			rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
@@ -285,8 +289,17 @@ class Student : public User
 				fprintf(stderr, "SQL error: %s\n", zErrMsg);
 				sqlite3_free(zErrMsg);
 			}
-			
-			sql<<"UPDATE BOOKS SET Copies = '"<<bookID<<;
+			int copies = atoi(getline(cout, int));
+			copies++;
+			sql<<"UPDATE BOOKS SET Copies = "<<copies<<" WHERE Book_id = "bookID<<";";
+			command=sql.str();
+			rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   it
+			if( rc != SQLITE_OK )
+			{
+				fprintf(stderr, "SQL error: %s\n", zErrMsg);
+				sqlite3_free(zErrMsg);
+			}
+			sql<<"INSERT INTO TRANSACTIONS VALUES ("<<transaction_id<<", "<<book_name<<", Return, "<<;
 			command=sql.str();
 			rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
 			if( rc != SQLITE_OK )
