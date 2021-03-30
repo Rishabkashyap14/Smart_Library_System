@@ -145,6 +145,7 @@ int User::show_user(void)
 		fprintf(stderr, "SQL error: %s\n", zErrMsg);
 		sqlite3_free(zErrMsg);
 	} 
+	sqlite3_close(db);
 	return 0;
 }
 
@@ -185,6 +186,7 @@ int User::modify_user(void)
 					fprintf(stderr, "SQL error: %s\n", zErrMsg);
 					sqlite3_free(zErrMsg);
 				}
+				sqlite3_close(db);
 				break;
 			}
 			case '2':
@@ -192,8 +194,7 @@ int User::modify_user(void)
 				cout<<"Enter the user name:\n";
 				getline(cin,name);
 				cout<<"Enter the previous password:"<<endl;
-				cin>>password;
-				cin.ignore();
+				getline(cin,password);
 				sqlite3 *db;
 				char *zErrMsg = 0;
 				int rc;
@@ -207,7 +208,7 @@ int User::modify_user(void)
 				} 
 				else 
 					fprintf(stderr, "Opened database successfully\n");
-				sql<<"SELECT Password FROM USERS WHERE UserName = '"<<name<<"' AND UserID = "<<userID<<"AND Password = '"<<password<<"'";
+				sql<<"SELECT Password FROM USERS WHERE User_name = '"<<name<<"' AND User_id = "<<userID<<" AND Password = '"<<password<<"';";
 				command=sql.str();
 				rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
 				if( rc != SQLITE_OK )
@@ -217,10 +218,10 @@ int User::modify_user(void)
 				}
 				if(rc!=SQLITE_NULL)
 				{
-					cout<<"Enter the new password"<<endl;
-					cin>>password;
-					cin.ignore();
-					sql<<"UPDATE USERS SET Password = '"<<password<<"' WHERE UserID = "<<userID<<";";
+					cout<<"Enter the new password\n";
+					getline(cin,password);
+					cout<<password;
+					sql<<"UPDATE USERS SET Password = '"<<password<<"' WHERE User_id = "<<userID;
 					command=sql.str();
 					rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
 					if( rc != SQLITE_OK )
@@ -229,13 +230,13 @@ int User::modify_user(void)
 						sqlite3_free(zErrMsg);
 					}
 				}
+				sqlite3_close(db);
 				break;
 			}
 			case '3':
 			{
 				cout<<"Enter the new user email id:\n";
 				getline(cin,email);
-				cin.ignore();
 				sqlite3 *db;
 				char *zErrMsg = 0;
 				int rc;
@@ -249,9 +250,45 @@ int User::modify_user(void)
 				} 
 				else 
 					fprintf(stderr, "Opened database successfully\n");
-				sql<<"UPDATE USERS SET Email = '"<<email<<"' WHERE User_id = '"<<userID<<"'";
+				sql<<"UPDATE USERS SET Email = '"<<email<<"' WHERE User_id = "<<userID;
+				command=sql.str();
+				rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
+				if( rc != SQLITE_OK )
+				{
+					fprintf(stderr, "SQL error: %s\n", zErrMsg);
+					sqlite3_free(zErrMsg);
+				}
+				sqlite3_close(db);
+				break;
 			}
-
+			case '4':
+			{
+				cout<<"Enter the new user type:\n";
+				getline(cin,Utype);
+				sqlite3 *db;
+				char *zErrMsg = 0;
+				int rc;
+				std::ostringstream sql;
+				std::string command;
+				rc = sqlite3_open("book.db", &db);
+				if( rc ) 
+				{
+					fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+					return(0);
+				} 
+				else 
+					fprintf(stderr, "Opened database successfully\n");
+				sql<<"UPDATE USERS SET UserType = '"<<Utype<<"' WHERE User_id = "<<userID;
+				command=sql.str();
+				rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
+				if( rc != SQLITE_OK )
+				{
+					fprintf(stderr, "SQL error: %s\n", zErrMsg);
+					sqlite3_free(zErrMsg);
+				}
+				sqlite3_close(db);
+				break;
+			}
 			default:
 				cout<<"Incorrect option, please try again"<<endl;
 				break;

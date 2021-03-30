@@ -93,6 +93,7 @@ int Book::remove_book()
 		fprintf(stderr, "SQL error: %s\n", zErrMsg);
 		sqlite3_free(zErrMsg);
 	} 
+	sqlite3_close(db);
 	return 0;
 }
 
@@ -156,6 +157,7 @@ int Book::modify_book()
 		fprintf(stderr, "SQL error: %s\n", zErrMsg);
 		sqlite3_free(zErrMsg);
 	} 
+	sqlite3_close(db);
 	return 0;
 }
 
@@ -189,6 +191,7 @@ int Book::print_info()
 		fprintf(stderr, "SQL error: %s\n", zErrMsg);
 		sqlite3_free(zErrMsg);
 	} 
+	sqlite3_close(db);
 	return 0;
 }
 /*------------------------------------------------------------------------------------------------------------------------------------------*/
