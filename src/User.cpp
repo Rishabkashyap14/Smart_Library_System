@@ -45,6 +45,25 @@ int User::authenticate_user(int userID, string password)
 	catch(bad_alloc& e){
 		cout<<e.what()<<"Invalid password size"<<endl;
 	}
+	sqlite3 *db;
+	char *zErrMsg = 0;
+	int rc;
+	std::ostringstream sql;
+	std::string command;
+	rc=sqlite3_open("book.db",&db);
+	if(rc) 
+	{
+		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+		return(0);
+	} 
+	else 
+		fprintf(stderr, "Opened database successfully\n");
+	sql<< "SELECT name from USERS WHERE User_id="<<userID<<" AND password='"<<password<<"'";
+	command=sql.str();
+	/* Execute SQL statement */
+	rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);
+	cout<<rc;
+	
 }
 
 int User::create_user(void)
@@ -135,7 +154,7 @@ int User::modify_user(void)
 	cin>>userID;
 	cout<<"What do you wish to change?\n1 - User name\n2 - Password\n3- Email\n4 - User Type\n5 - All Good, exit"<<endl;
 	cin>>choice;
-	int flag = 0;
+	int flag=0;
 	while(!flag)
 	{
 		switch(choice)
@@ -213,12 +232,32 @@ int User::modify_user(void)
 				}
 				break;
 			}
+			case '3':
+			{
+				cout<<"Enter the new user email id:\n";
+				getline(cin,email);
+				cin.ignore();
+				sqlite3 *db;
+				char *zErrMsg = 0;
+				int rc;
+				std::ostringstream sql;
+				std::string command;
+				rc = sqlite3_open("book.db", &db);
+				if( rc ) 
+				{
+					fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+					return(0);
+				} 
+				else 
+					fprintf(stderr, "Opened database successfully\n");
+				sql<<"UPDATE USERS SET Email = '"<<email<<"' WHERE User_id = '"<<userID<<"'";
+			}
 
 			default:
 				cout<<"Incorrect option, please try again"<<endl;
 				break;
 		}
-	//}		    	
+	}		    	
 }
 
 /*-------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -234,33 +273,12 @@ class Student : public User
 		void issue_book(int userID, int bookID)
 		{
 			printf("Enter user password:\n");
-			//authenticate_user(userID, password);
-			
-			sqlite3 *db;
-			char *zErrMsg = 0;
-			int rc;
-			std::ostringstream sql;
-			std::string command;
-			rc = sqlite3_open("book.db", &db);
-			if( rc ) 
-			{
-				fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-				return(0);
-			} 
-			else 
-				fprintf(stderr, "Opened database successfully\n");
-			sql<<"DELETE FROM BOOKS WHERE BookID = '"<<bookID;
-			command=sql.str();
-			rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
-			if( rc != SQLITE_OK )
-			{
-				fprintf(stderr, "SQL error: %s\n", zErrMsg);
-				sqlite3_free(zErrMsg);
-			}
-			sqlite3_close(db);
+			//Check SQL query for password
+			//SQL query to remove book and add it to transaction table
 		};
-		void return_book(int userID, int bookID)
+		void return_book()
 		{
+<<<<<<< HEAD
 			printf("Enter user password:\n");
 			//authenticate_user(userID, password);
 			
@@ -308,6 +326,8 @@ class Student : public User
 				sqlite3_free(zErrMsg);
 			}
 			sqlite3_close(db);
+=======
+>>>>>>> de12c4b6889dfef9dfb029012d2bcf2be8c6075e
 		};
 		void reserve_book()
 		{
