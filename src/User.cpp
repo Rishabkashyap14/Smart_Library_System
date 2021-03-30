@@ -135,8 +135,9 @@ int User::modify_user(void)
 	cin>>userID;
 	cout<<"What do you wish to change?\n1 - User name\n2 - Password\n3- Email\n4 - User Type\n5 - All Good, exit"<<endl;
 	cin>>choice;
-	//while(1)
-	//{
+	int flag = 0;
+	while(!flag)
+	{
 		switch(choice)
 		{
 			case '1':
@@ -233,11 +234,67 @@ class Student : public User
 		void issue_book(int userID, int bookID)
 		{
 			printf("Enter user password:\n");
-			//Check SQL query for password
-			//SQL query to remove book and add it to transaction table
+			//authenticate_user(userID, password);
+			
+			sqlite3 *db;
+			char *zErrMsg = 0;
+			int rc;
+			std::ostringstream sql;
+			std::string command;
+			rc = sqlite3_open("book.db", &db);
+			if( rc ) 
+			{
+				fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+				return(0);
+			} 
+			else 
+				fprintf(stderr, "Opened database successfully\n");
+			sql<<"DELETE FROM BOOKS WHERE BookID = '"<<bookID;
+			command=sql.str();
+			rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
+			if( rc != SQLITE_OK )
+			{
+				fprintf(stderr, "SQL error: %s\n", zErrMsg);
+				sqlite3_free(zErrMsg);
+			}
+			sqlite3_close(db);
 		};
-		void return_book()
+		void return_book(int userID, int bookID)
 		{
+			printf("Enter user password:\n");
+			//authenticate_user(userID, password);
+			
+			sqlite3 *db;
+			char *zErrMsg = 0;
+			int rc;
+			std::ostringstream sql;
+			std::string command;
+			rc = sqlite3_open("book.db", &db);
+			if( rc ) 
+			{
+				fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+				return(0);
+			} 
+			else 
+				fprintf(stderr, "Opened database successfully\n");
+			sql<<"SELECT Copies FROM BOOKS WHERE Book_id = '"<<bookID<<"';";
+			command=sql.str();
+			rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
+			if( rc != SQLITE_OK )
+			{
+				fprintf(stderr, "SQL error: %s\n", zErrMsg);
+				sqlite3_free(zErrMsg);
+			}
+			
+			sql<<"UPDATE BOOKS SET Copies = '"<<bookID<<;
+			command=sql.str();
+			rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
+			if( rc != SQLITE_OK )
+			{
+				fprintf(stderr, "SQL error: %s\n", zErrMsg);
+				sqlite3_free(zErrMsg);
+			}
+			sqlite3_close(db);
 		};
 		void reserve_book()
 		{
