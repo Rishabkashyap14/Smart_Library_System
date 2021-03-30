@@ -11,7 +11,7 @@ int main()
 	x=b.add_book();
 	z=b.print_info();
 	int w=b.modify_book();
-	int z=b.print_info();
+	z=b.print_info();
 	y=b.remove_book();
 	z=b.print_info();*/
 

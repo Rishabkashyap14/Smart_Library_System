@@ -154,16 +154,16 @@ int User::modify_user(void)
 	cin>>userID;
 	cout<<"What do you wish to change?\n1 - User name\n2 - Password\n3- Email\n4 - User Type\n5 - All Good, exit"<<endl;
 	cin>>choice;
+	cin.ignore();
 	int flag=0;
-	while(!flag)
-	{
+	//while(!flag)
+	//{
 		switch(choice)
 		{
 			case '1':
 			{
 				cout<<"Enter the new user name:\n";
 				getline(cin,name);
-				cin.ignore();
 				sqlite3 *db;
 				char *zErrMsg = 0;
 				int rc;
@@ -191,7 +191,6 @@ int User::modify_user(void)
 			{
 				cout<<"Enter the user name:\n";
 				getline(cin,name);
-				cin.ignore();
 				cout<<"Enter the previous password:"<<endl;
 				cin>>password;
 				cin.ignore();
@@ -257,11 +256,11 @@ int User::modify_user(void)
 				cout<<"Incorrect option, please try again"<<endl;
 				break;
 		}
-	}		    	
+	//}		    	
 }
 
 /*-------------------------------------------------------------------------------------------------------------------------------------------*/
-class Student : public User
+/*class Student : public User
 {
 	private:
 		int userID;
@@ -278,7 +277,6 @@ class Student : public User
 		};
 		void return_book()
 		{
-<<<<<<< HEAD
 			printf("Enter user password:\n");
 			//authenticate_user(userID, password);
 			
@@ -326,28 +324,26 @@ class Student : public User
 				sqlite3_free(zErrMsg);
 			}
 			sqlite3_close(db);
-=======
->>>>>>> de12c4b6889dfef9dfb029012d2bcf2be8c6075e
 		};
 		void reserve_book()
 		{
 		};
-};
+};*/
 /*--------------------------------------------------------------------------------------------------------------------------------------------*/
-class Administrator : public User
+/*class Administrator : public User
 {
 	public:
 		void Register_user();
 		void Add_book_details();
 		void Calculate_fine();
-};
+};*/
 /*--------------------------------------------------------------------------------------------------------------------------------------------*/
-class Librarian : public User
+/*class Librarian : public User
 {
 	public:
 		void Add_new();
 		void Remove_book();
 		void Update_book();
 		void Issue_book();
-};
+};*/
 /*--------------------------------------------------------------------------------------------------------------------------------------------*/
