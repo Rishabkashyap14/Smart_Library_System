@@ -33,9 +33,7 @@ int Issue::User_Books()
 		fprintf(stderr, "SQL error: %s\n", zErrMsg);
 		sqlite3_free(zErrMsg);
 	} 
-	else
-		fprintf(stdout, "Records created successfully\n");
-	cout<<rc;
+
 	sqlite3_close(db);
 	if(availability==1)
 	{
