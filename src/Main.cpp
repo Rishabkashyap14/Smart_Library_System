@@ -13,12 +13,16 @@ int main()
 	int w=b.modify_book();
 	z=b.print_info();
 	y=b.remove_book();
-	z=b.print_info();*/
+	z=b.print_info();
 
 	//Testing for user class
 	User u;
-	//int a=u.create_user();
-	//int b=u.show_user();
-	int c=u.modify_user();
+	int a=u.create_user();
+	int b=u.show_user();
+	int c=u.modify_user();*/
+
+	//Testing for Issue class
+	Issue i;
+	int m=i.User_Books();
 	return 0;
 }

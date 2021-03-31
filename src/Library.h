@@ -4,7 +4,7 @@ int callback(void* data, int argc, char** argv, char** azColName);
 
 class User
 {
-	private:
+	protected:
     		int userID;
 		int bookID;
     		std::string name;
@@ -34,7 +34,7 @@ class User
 
 class Book
 {
-	private:
+	protected:
 		//According to class diagram
 		int book_id;
 		std::string book_name;
@@ -62,4 +62,51 @@ class Book
 		int remove_book();
 		int modify_book();
 		int print_info();
+};
+
+class Issue: public Book, public User
+{
+	private:
+		std::string issue_date;
+		std::string return_date;
+		int transaction_id;
+	public:
+		Issue()
+		{
+			issue_date="";
+			return_date="";
+			transaction_id=0;
+		};
+		int User_Books();//Return Transaction id?
+};
+
+class Return: public Book, public User
+{
+	private:
+		int transaction_id;
+		std::string return_date;
+	public:
+		Return()
+		{
+			return_date="";
+			transaction_id=0;
+		};
+		int Fine();
+		
+		//Extra Function
+		int Return_Book();//to update database
+};
+
+class Reserve: public Book, public User
+{
+	private:
+		int book_id;
+		int user_id;
+	public:
+		Reserve()
+		{
+			book_id=0;
+			user_id=0;
+		};
+		int Reserve_Book();
 };
