@@ -91,7 +91,7 @@ class Return: public Book, public User
 			return_date="";
 			transaction_id=0;
 		};
-		double Fine();
+		double Fine(int userID, int book_id);
 		
 		//Extra Function
 		int Return_Book();//to update database
