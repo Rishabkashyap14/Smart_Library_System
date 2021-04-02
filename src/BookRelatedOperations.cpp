@@ -12,6 +12,7 @@ int Issue::User_Books()
 	cin>>book_id;
 	cin.ignore();
 	sqlite3 *db;
+	sqlite3_stmt *res;
 	char *zErrMsg = 0;
 	int rc;
 	std::ostringstream sql;
@@ -27,15 +28,17 @@ int Issue::User_Books()
 		fprintf(stderr, "Opened database successfully\n");
 	sql<<"SELECT Copies FROM BOOKS WHERE Book_id="<<book_id;
 	command=sql.str();
-	rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
-	if( rc != SQLITE_OK )
-	{
-		fprintf(stderr, "SQL error: %s\n", zErrMsg);
-		sqlite3_free(zErrMsg);
-	} 
-
+	rc = sqlite3_prepare_v2(db, command.c_str(), -1, &res, 0);
+    	if (rc == SQLITE_OK)
+        	sqlite3_bind_int(res, 1, 3);
+	else
+        	fprintf(stderr, "Failed to execute statement: %s\n", sqlite3_errmsg(db));
+    	int step = sqlite3_step(res);
+	if (step == SQLITE_ROW) 
+        	number_of_copies=sqlite3_column_int(res, 0);
+	sqlite3_finalize(res);
 	sqlite3_close(db);
-	if(availability==1)
+	if(number_of_copies>0)
 	{
 		number_of_copies--;
 		cout<<"Enter The Transaction Identity Number:"<<endl;
@@ -44,11 +47,8 @@ int Issue::User_Books()
 
 		string status="Issued";
 
-		time_t issue_date = time(0);
-		string dt = ctime(&issue_date);
-
-		cout<<"Enter Return Date:\n";
-		getline(cin,return_date);
+		time_t now = time(0);
+		string issue_date = ctime(&now);
 
 		cout<<"Enter The User Identity number:"<<endl;
 		cin>>userID;
@@ -56,6 +56,7 @@ int Issue::User_Books()
 
 		/* Open database */
 		rc = sqlite3_open("book.db", &db);
+		std::ostringstream sql1;
 		if(rc) 
 		{
 			fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
@@ -63,8 +64,8 @@ int Issue::User_Books()
 		} 
 		else 
 			fprintf(stderr, "Opened database successfully\n");
-		sql<<"INSERT INTO TRANSACTIONS VALUES ("<<transaction_id<<", '"<<status<<"', '"<<issue_date<<"', '"<<return_date<<"',"<<userID<<book_id<<")";
-		command=sql.str();
+		sql1<<"INSERT INTO TRANSACTIONS VALUES ("<<transaction_id<<", '"<<status<<"', '"<<issue_date<<"', 0,"<<userID<<","<<book_id<<");UPDATE BOOKS SET Copies="<<number_of_copies<<" WHERE Book_Id="<<book_id;
+		command=sql1.str();
 		rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
 		if( rc != SQLITE_OK )
 		{
