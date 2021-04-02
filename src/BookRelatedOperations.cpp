@@ -81,11 +81,16 @@ int Issue::User_Books()
 	return 0;
 }
 
-int Return::Fine()
+double Return::Fine()
 {
-	int number_of_days=0;
-	//Write Code to get number of days
-	return number_of_days*2;
+	double number_of_days=0;
+	time_t now = time(0);
+	string return_date = ctime(&now);
+	struct tm tm;
+	strptime("Fri Apr  12 14:41:00 2021", "%a %b %H:%M:%S %Y", &tm);
+	time_t t = mktime(&tm);
+	number_of_days=difftime(now,t);
+	return number_of_days;
 }
 int Return::Return_Book()
 {
