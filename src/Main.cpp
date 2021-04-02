@@ -16,10 +16,10 @@ int main()
 	int w=b.modify_book();
 	z=b.print_info();
 	y=b.remove_book();
-	z=b.print_info();
+	z=b.print_info();*/
 
-	
-	User u;
+	//Testing for User Class
+	/*User u;
 	int a=u.create_user();
 	int b=u.show_user();
 	int c=u.modify_user();*/

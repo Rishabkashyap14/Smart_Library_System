@@ -1,5 +1,7 @@
 #include <iostream>
 
+using namespace std;
+
 int callback(void* data, int argc, char** argv, char** azColName);
 
 class User
@@ -26,10 +28,10 @@ class User
 			choice='$';
 			attempt=0;
 		};
-		int create_user(void);
+		int create_user(string Utype);
 		int show_user(void);
 		int modify_user(void);
-		int authenticate_user(int userID, std::string password);
+		int authenticate_user(int userID);//, std::string password);
 };
 
 class Book
