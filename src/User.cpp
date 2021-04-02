@@ -15,7 +15,7 @@ using namespace std;
 int User::authenticate_user(void)//, string password)
 {
 	cout<<"Enter the UserID:\n";
-	getline(cin,userID);
+	cin>>userID;
 	cin.ignore();
 	cout<<"Enter the password for user: "<<userID<<"\n";
 	getline(cin, password);
@@ -41,7 +41,7 @@ int User::authenticate_user(void)//, string password)
 	command=sql.str();
 	rc = sqlite3_prepare_v2(db, command.c_str(), -1, &res, 0);
     	if(rc == SQLITE_OK)
-        	sqlite3_bind_text(res, 1, 3);
+        	sqlite3_bind_text(res, 1, command.c_str(), -1, SQLITE_TRANSIENT);
 	else
         	fprintf(stderr, "Failed to execute statement: %s\n", sqlite3_errmsg(db));
     	int step = sqlite3_step(res);
@@ -165,7 +165,7 @@ int User::show_user(void)
 	cout<<"Enter The User Identity number:\n";//should this be generated
 	cin>>userID;
 	cin.ignore();
-	authenticate_user(UserID, password);
+	authenticate_user();
 	sqlite3 *db;
 	char *zErrMsg = 0;
 	int rc;
@@ -338,107 +338,6 @@ int User::modify_user(void)
 	}	    	
 }
 
-/*-------------------------------------------------------------------------------------------------------------------------------------------*/
-class Student : public User, public Book
-{
-	protected:
-		int userID;
-		int book_ID;
-		char name[20];
-		char password[10];
-		char choice;
-	public:
-		void issue_book(int userID, int bookID)
-		{
-			//How are we supposed to make a different thing for this?
-		};
-		void return_book()
-		{
-			printf("Enter user password:\n");
-			authenticate_user(userID, password);
-			cout<<"Enter the Book Name: \n:";
-			getline(cin, 
-			transaction_id++;
-			sqlite3 *db;
-			char *zErrMsg = 0;
-			int rc;
-			std::ostringstream sql;
-			std::string command;
-			rc = sqlite3_open("book.db", &db);
-			if( rc ) 
-			{
-				fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-				return(0);
-			} 
-			else 
-				fprintf(stderr, "Opened database successfully\n");
-			//Adding the new book into the BOOKS table
-			sql<<"SELECT Copies FROM BOOKS WHERE Book_id = '"<<bookID<<"';";
-			command=sql.str();
-			rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
-			if( rc != SQLITE_OK )
-			{
-				fprintf(stderr, "SQL error: %s\n", zErrMsg);
-				sqlite3_free(zErrMsg);
-			}
-			int copies = atoi(getline(cout, int));
-			copies++;
-			sql<<"UPDATE BOOKS SET Copies = "<<copies<<" WHERE Book_id = "bookID<<";";
-			command=sql.str();
-			rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   it
-			if( rc != SQLITE_OK )
-			{
-				fprintf(stderr, "SQL error: %s\n", zErrMsg);
-				sqlite3_free(zErrMsg);
-			}
-			sql<<"INSERT INTO TRANSACTIONS VALUES ("<<transaction_id<<", "<<book_name<<", Return, "<<;
-			command=sql.str();
-			rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
-			if( rc != SQLITE_OK )
-			{
-				fprintf(stderr, "SQL error: %s\n", zErrMsg);
-				sqlite3_free(zErrMsg);
-			}
-			sqlite3_close(db);
-		};
-		void reserve_book()
-		{
-		};
-};*/
-/*--------------------------------------------------------------------------------------------------------------------------------------------*/
-/*class Administrator : public User, public Return, public Book
-{
-	public:
-		void Register_user();
-		void Calculate_fine();
-};
 
-void Administrator::Register_User(void)
-{
-	Utype = 'Administrator';
-	if(!create_user(Utype))
-	{
-		cout<<"Error creating User\n";
-		return 0;
-	}
-	return 1;
-}
 
-void Add_book_details(int book_id)
-{
-	cout<<"Enter the user ID:\n";
-	cin>>userID;
-	
-}
 
-*/
-/*--------------------------------------------------------------------------------------------------------------------------------------------*/
-/*class Librarian : public User
-{
-	public:
-		void Add_new();
-		void Remove_book();
-		void Update_book();
-		void Issue_book();
-};*/
-/*--------------------------------------------------------------------------------------------------------------------------------------------*/

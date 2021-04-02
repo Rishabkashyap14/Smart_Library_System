@@ -36,7 +36,7 @@ class User
 
 class Book
 {
-	private:
+	protected:
 		//According to class diagram
 		int book_id;
 		std::string book_name;
@@ -114,4 +114,70 @@ class Reserve: public Book, public User
 			user_id=0;
 		};
 		int Reserve_Book();
+};
+
+class Student : public Issue, public Return 
+{
+	public:
+		Student()
+		{
+			Issue::Utype="Student";
+		}
+		void issue_book()
+		{
+			int issue= Issue::User_Books();
+		};
+		void return_book()
+		{
+			int Return= Return::Return_Book();
+		};
+		void reserve_book()
+		{
+		};
+};
+
+class Administrator : public Return
+{
+	public:
+		void Register_user()
+		{
+			cout<<"Enter The type of User:\n";
+			getline(cin,Utype);
+			int new_user=Return::create_user(Utype);
+		};
+		void Calculate_fine()
+		{
+			cout<<"Enter the userID: \n";
+			cin>>userID;
+			cin.ignore();
+			cout<<"Enter the bookID: \n";
+			cin>>book_id;
+			cin.ignore();
+			cout<<Return::Fine(userID, book_id);
+		};
+};
+
+class Librarian : public Issue, public Return
+{
+	public:
+		void Add_new()
+		{
+			int b=Issue::add_book();
+		};
+		void Remove_book()
+		{
+			int r=Issue::remove_book();
+		};
+		void Update_book()
+		{
+			int modify=Issue::modify_book();
+		};
+		void Issue_book()
+		{
+			int issue= Issue::User_Books();
+		};
+		void Return_book()
+		{
+			int Return= Return::Return_Book();
+		};
 };

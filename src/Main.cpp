@@ -25,10 +25,15 @@ int main()
 	int c=u.modify_user();*/
 
 	//Testing for Issue class
-	Issue i;
+	/*Issue i;
 	Return r;
-	//int m=i.User_Books();
-	//cout<<r.Fine();
-	int k = r.Return_Book();
+	int m=i.User_Books();
+	cout<<r.Fine();
+	int k = r.Return_Book();*/
+
+	//Testing for Student Class
+	Student s;
+	s.issue_book();
+	s.return_book();
 	return 0;
 }
