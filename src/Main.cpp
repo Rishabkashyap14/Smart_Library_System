@@ -1,4 +1,7 @@
 #include "Library.h"
+#include <iostream>
+
+using namespace std;
 
 int main()
 {
@@ -23,6 +26,8 @@ int main()
 
 	//Testing for Issue class
 	Issue i;
+	Return r;
 	int m=i.User_Books();
+	cout<<r.Fine();
 	return 0;
 }
