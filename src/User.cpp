@@ -139,7 +139,7 @@ int User::show_user(void)
 	sql<<"SELECT User_id,User_name,Email,UserType FROM USERS WHERE User_id="<<userID;
 	command=sql.str();
 	/* Execute SQL statement */
-	rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
+	rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);
 	if( rc != SQLITE_OK )
 	{
 		fprintf(stderr, "SQL error: %s\n", zErrMsg);
