@@ -27,7 +27,8 @@ int main()
 	//Testing for Issue class
 	Issue i;
 	Return r;
-	int m=i.User_Books();
-	cout<<r.Fine();
+	//int m=i.User_Books();
+	//cout<<r.Fine();
+	int k = r.Return_Book();
 	return 0;
 }
