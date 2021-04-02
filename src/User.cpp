@@ -12,10 +12,13 @@
 
 using namespace std;
 
-int User::authenticate_user(int userID)//, string password)
+int User::authenticate_user(void)//, string password)
 {
+	cout<<"Enter the UserID:\n";
+	getline(cin,userID);
+	cin.ignore();
 	cout<<"Enter the password for user: "<<userID<<"\n";
-	cin>>password;
+	getline(cin, password);
 	cin.ignore();
 	int attempt = 0;
 	const char* pwd;

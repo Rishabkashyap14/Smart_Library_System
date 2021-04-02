@@ -31,12 +31,12 @@ class User
 		int create_user(string Utype);
 		int show_user(void);
 		int modify_user(void);
-		int authenticate_user(int userID);//, std::string password);
+		int authenticate_user(void);//, std::string password);
 };
 
 class Book
 {
-	protected:
+	private:
 		//According to class diagram
 		int book_id;
 		std::string book_name;
@@ -72,6 +72,7 @@ class Issue: public Book, public User
 		std::string issue_date;
 		std::string return_date;
 		int transaction_id;
+		Book b;
 	public:
 		Issue()
 		{
@@ -87,6 +88,7 @@ class Return: public Book, public User
 	private:
 		int transaction_id;
 		std::string return_date;
+		Book b;
 	public:
 		Return()
 		{
@@ -104,6 +106,7 @@ class Reserve: public Book, public User
 	private:
 		int book_id;
 		int user_id;
+		Book b;
 	public:
 		Reserve()
 		{
