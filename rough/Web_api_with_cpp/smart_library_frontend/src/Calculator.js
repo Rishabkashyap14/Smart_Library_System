@@ -27,7 +27,7 @@ class Calculator extends React.Component
 			this.numberHandler(operation === "subtract" ? "-":"+");
 			return;
 		}
-		
+		this.setOperation(operation);
 	}
 	
 	//Updating operation in the state variable
@@ -36,7 +36,17 @@ class Calculator extends React.Component
 		this.setState({
 			operation: operation
 		});
-		
+		this.nextNumber();
+	}
+	
+	//Update the number IDs 
+	nextNumber()
+	{
+		const newIdx = this.state.numberIdx === 0 ? 1:0;
+		this.setState({
+			result: this.state.numbers[newidx],
+			numberIdx: newIdx,
+		});
 	}
 	
 	//Handling numbers
@@ -69,10 +79,40 @@ class Calculator extends React.Component
 
 	clearHandler()
 	{
+		this.setState({
+			result = "";
+			numbers = ["", ""],
+			numberIdx = 0,
+		});
 	}
 
 	equalHandler()
 	{
+		if(this.state.numbers[0] === "" || this.state.numbers[1] === "")
+		{
+			return;
+		}
+		//The below sends the numbers to the backend API, and when the result is ready the handler is called and result is passed through the handler argument
+		this.props.calculatorApi.calculate(
+			this.state.numbers[0],
+			this.state.numbers[1],
+			operation,
+			(result)=> {
+				this.setResult(result);
+			});
+	}
+	
+	//Function to update the result variable in the state object
+	setResult(result)
+	{
+		const newNumbers = [result, ""];
+		const newNumberIdx = 0;
+		this.setState({
+			result: newNumbers[newNumberIdx],
+			numbers: newNumbers,
+			numberIdx: newNumberIdx,
+			operation: "",
+		});
 	}
 
 	render(){
