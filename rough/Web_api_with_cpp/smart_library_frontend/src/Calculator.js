@@ -5,9 +5,9 @@ class Calculator extends React.Component
 {
 	constructor(props)
 	{
-		super(propr);
+		super(props);
 		this.state = {
-				result = "",
+				result: "",
 				numbers: ["", ""],
 				numberIndex: 0,
 				operation: "",
@@ -22,7 +22,7 @@ class Calculator extends React.Component
 			this.equalHandler(); 
 			return;
 		}
-		if((operation == "subtract" || operation == "add") && (this.state.numbers[this.state.numberIdx] === "")
+		if((operation == "subtract" || operation == "add") && (this.state.numbers[this.state.numberIdx] === ""))
 		{
 			this.numberHandler(operation === "subtract" ? "-":"+");
 			return;
@@ -44,7 +44,7 @@ class Calculator extends React.Component
 	{
 		const newIdx = this.state.numberIdx === 0 ? 1:0;
 		this.setState({
-			result: this.state.numbers[newidx],
+			result: this.state.numbers[newIdx],
 			numberIdx: newIdx,
 		});
 	}
@@ -80,9 +80,9 @@ class Calculator extends React.Component
 	clearHandler()
 	{
 		this.setState({
-			result = "";
-			numbers = ["", ""],
-			numberIdx = 0,
+			result: "",
+			numbers: ["", ""],
+			numberIdx: 0,
 		});
 	}
 
@@ -96,7 +96,7 @@ class Calculator extends React.Component
 		this.props.calculatorApi.calculate(
 			this.state.numbers[0],
 			this.state.numbers[1],
-			operation,
+			this.state.operation,
 			(result)=> {
 				this.setResult(result);
 			});
