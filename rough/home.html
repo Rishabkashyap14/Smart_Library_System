@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="home.js"></script>
 <style>
 html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 </style>
@@ -27,14 +28,69 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 		<a href="#">Return Book</a>
 </div>
 <!-- Right Column -->
-<div class="w3-twothird" style="position:absolute; top:100px;left:30%;width:45%">
+<span style="position: absolute;top: 0;right: 25px;">
+		<input type="image" name="Open" src="plague-doctor.jpg" width="75px" height="65px" alt="Open" style="border-radius:25px;"> </span>
+<div class="w3-twothird" style="position:absolute; top:20px;left:30%;width:45%">
     
       <div class="w3-container w3-card w3-white w3-margin-bottom">
         <h2 class="w3-text-grey w3-padding-16" align="center">START READING</h2>
         <div class="w3-container">
           <h5 class="w3-opacity"><b><i>"If you don’t like to read, you haven’t found the right book."</i></b><br/>-J.K. Rowling</h5>
+	  <button id="leftbox">Sign Up</button>
+	  <button id="rightbox">Sign In</button>
+	 </br></br>
           <div id="leftbox"><img src="one.png" width="50px" height="50px"><h3 class="w3-text-grey w3-padding-16">Search</h3></div>
-	  <div id="middlebox"><img src="two.png" width="50px" height="50px"><h3 class="w3-text-grey w3-padding-16">Issue</h3></div>
-	  <div id="rightbox"><img src="three.jpeg" width="50px" height="50px"><h3 class="w3-text-grey w3-padding-16">Read</h3><div>
+	  <div id="rightbox"><img src="three.jpeg" width="50px" height="50px"><h3 class="w3-text-grey w3-padding-16">Read</h3></div>
+	  <div align="center"><img src="two.png" width="50px" height="50px"><h3 class="w3-text-grey w3-padding-16">Issue</h3><div>
         </div>
+	</div>
+</div>
+
+<div class="w3-twothird" style="position:absolute; top:100%;left:30%;width:45%">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	  <!-- The form -->
+	<form class="example" action="action_page.php">
+  		<input type="text" placeholder="Search.." name="search">
+  		<button type="submit"><i class="fa fa-search"></i></button>
+	</form>
+</div>
+
+<div class="w3-twothird" style="position:absolute;top:120%;width:100%;right:3px;">
+    
+      <div class="w3-container w3-card w3-white w3-margin-bottom">
+        <div class="w3-container">
+          <div id="leftbox"><h4 align="center" class="w3-text-grey w3-padding-16">An Ocean of Books</h4></div>
+	  <div id="middlebox"><h4 align="center" class="w3-text-grey w3-padding-16">Exclusive Access to New Arrivals</h4></div>
+	  <div align="rightbox"><h4 align="center" class="w3-text-grey w3-padding-16">Unlimited Exchanges</h4></div>
+        </div>
+	</div>
+</div>
+<div style="position:absolute;top:200%;width:100%;right:3px;">
+    <h1>Trending</h1><br>
+<div class="w3-row">
+    <div class="w3-half">
+      <img src="tyranttomb.jpeg" style="height:50%;width:100%">
+      <img src="ikigai.jpeg" style="height:50%;width:100%">
+      <img src="splendidsuns.jpeg" style="height:50%;width:100%">
+    </div>
+
+    <div class="w3-half">
+       <img src="invisiblewoman.jpeg" style="height:50%;width:100%">
+      <img src="underland.jpeg" style="height:50%;width:100%">
+    </div>
+  </div>
+</div>
+<div style="position:absolute;top:600%;width:100%;right:3px;">
+    <h1>Contact</h1><br>
+    <p class="w3-text-blue-grey w3-large"><b>Uncover Books 42nd Living St, 560037 Bengaluru</b></p>
+    <p>You can also contact us by phone 1234567890 or email contactus@uncoverbooks.com, or you can send us a message here:</p>
+    <form action="/action_page.php" target="_blank">
+      <p><input class="w3-input w3-padding-16" type="text" placeholder="Name" required name="Name"></p>
+      <p><input class="w3-input w3-padding-16" type="number" placeholder="Email" required name="People"></p>
+      <p><input class="w3-input w3-padding-16" type="datetime-local" placeholder="Contact" required name="date"></p>
+      <p><input class="w3-input w3-padding-16" type="text" placeholder="Message" required name="Message"></p>
+      <p><button class="w3-button w3-light-grey w3-section" type="submit">SEND MESSAGE</button></p>
+    </form>
+</div>
 </body>

@@ -13,7 +13,7 @@ body{
             }
             #middlebox{
                 float:left; 
-                width:25%;
+                width:50%;
             }
             #rightbox{
                 float:right;
@@ -55,4 +55,62 @@ body{
   right: 25px;
   font-size: 36px;
   margin-left: 50px;
+}
+
+button{
+  display: block;
+  float: right;
+  line-height: $font-size * 2;
+  padding: 0 20px;
+  border: none;
+  background: #6686C5;
+  color: white;
+  letter-spacing: 2px;
+  transition: .2s all ease-in-out;
+  border-bottom: 2px solid transparent;
+  outline: none;
+ }
+  
+  &:hover{
+    background: inherit
+    color: $form-border
+    border-bottom: 2px solid $form-border
+    }
+  
+::selection{
+  background: rgb(255, 199, 184);
+  }
+/*Search Bar*/
+/* Style the search field */
+form.example input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 80%;
+  background: #f1f1f1;
+}
+
+/* Style the submit button */
+form.example button {
+  float: left;
+  width: 20%;
+  padding: 15px;
+  background: #2196F3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none; /* Prevent double borders */
+  cursor: pointer;
+}
+
+form.example button:hover {
+  background: #0b7dda;
+}
+
+/* Clear floats */
+form.example::after {
+  content: "";
+  clear: both;
+  display: table;
 }
