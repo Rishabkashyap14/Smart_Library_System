@@ -7,4 +7,9 @@ function openNav() {
 function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
 }
+const button = document.querySelector('.btn')
+const form   = document.querySelector('.form')
 
+button.addEventListener('click', function() {
+   form.classList.add('form--no') 
+});

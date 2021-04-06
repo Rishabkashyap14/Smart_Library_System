@@ -15,7 +15,7 @@ $font-color: #2A293E
  }
 
 body{
-  background: url("index.jpg") center center no-repeat;
+  background: url("../images/add_book.jpg") center center no-repeat;
   background-size: cover;
   width: 100vw;
   height: 100vh;
@@ -150,6 +150,7 @@ button{
 #main {
   transition: margin-left .5s;
   padding: 20px;
+  
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */

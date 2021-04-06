@@ -1,0 +1,53 @@
+<html>
+<title>Issue Book</title>
+<head>
+<link rel="stylesheet" href="issuebook.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="issuebook.js"></script>
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+</style>
+</head>
+<body style="home.css">
+<span onclick="openNav()" style="position: absolute;top: 0;left: 25px;">
+		<input type="image" name="Open" src="../images/nav.png" width="50px" height="50px" alt="Open"> 
+</span>
+<div id="mySidenav" class="sidenav">
+  		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+		<a><strong>Undercover Books</strong></a>
+		<br/>
+		<a href="../home/home.html">Home</a>
+  		<a href="../addbook/test.html">Add Book</a>
+  		<a href="#">Remove Book</a>
+  		<a href="#">Update Book</a>
+  		<a href="#">Issue Book</a>
+		<a href="#">Return Book</a>
+</div>
+<span style="position: absolute;top: 0;right: 25px;">
+		<input type="image" name="Open" src="../images/plague-doctor.jpg" width="75px" height="65px" alt="Open" style="border-radius:25px;"> </span>
+<div>
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	  <!-- The form -->
+	<form class="example" action="action_page.php">
+  		<input type="text" placeholder="Enter Book Name/Book ID..." name="search">
+  		<button type="submit"><i class="fa fa-search"></i></button>
+	</form>
+</div>
+<div class="courses-container">
+	<div class="course">
+		<div class="course-preview">
+			<h6>BOOK ID:1234567890</h6>
+			<h2>The Wheel of Time - The Eye of the World</h2>
+		</div>
+		<div class="course-info">
+			<h6>The wheel weaves as the wheel wills.</h6>
+			<h3>Robert Jordan</h3>
+			<button class="btn">Issue</button>
+		</div>
+	</div>
+</div>
+</body>
+</html>
