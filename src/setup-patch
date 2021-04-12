@@ -1,0 +1,4 @@
+146a147,149
+>		ext.include_dirs.append(".")
+>		build_ext.build_extension(self, ext)
+>		return
