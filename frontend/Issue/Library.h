@@ -46,7 +46,7 @@ class Book
 		//Some other extra variables
 		std::string description;
 		int number_of_copies;
-		
+
 		//Constructor
 		Book()
 		{
@@ -67,10 +67,12 @@ class Book
 
 class Issue: public Book, public User
 {
-	public:
+	private:
 		std::string issue_date;
 		std::string return_date;
 		int transaction_id;
+		Book b;
+	public:
 		Issue()
 		{
 			issue_date="";
@@ -82,10 +84,11 @@ class Issue: public Book, public User
 
 class Return: public Book, public User
 {
-	public:
+	private:
 		int transaction_id;
 		std::string return_date;
 		Book b;
+	public:
 		Return()
 		{
 			return_date="";

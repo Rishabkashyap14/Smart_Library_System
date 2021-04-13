@@ -6,7 +6,7 @@ int callback(void* data, int argc, char** argv, char** azColName);
 
 class User
 {
-	protected:
+	public:
     		int userID;
 		int bookID;
     		std::string name;
@@ -15,7 +15,7 @@ class User
     		std::string Utype;
     		char choice;
 		int attempt;
-	public:
+
 		//Constructor
 		User()
 		{

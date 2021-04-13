@@ -1,0 +1,15 @@
+{
+  "name": "issue",
+  "version": "1.0.0",
+  "description": "Issuing a book",
+  "main": "Issue1.js",
+  "scripts": {
+    "test": "Issue"
+  },
+  "author": "Manav Agarwal, Shreya Venugopal, Rishab Kashyap",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7"
+  }
+}

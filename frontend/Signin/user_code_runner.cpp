@@ -12,7 +12,7 @@ int main(int argc, const char* argv[])
 		u.password = argv[3];
 		u.email = argv[4];
 		
-		int x = b.create_user();
+		int x = u.create_user("Student");
 	}
 	std::cout << "User added successfully" << std::endl;
 	return 0;

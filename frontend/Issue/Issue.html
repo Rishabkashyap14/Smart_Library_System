@@ -1,0 +1,49 @@
+<html>
+<title>Issue Book</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="Signin.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+</style>
+
+<body style="Signin.css">
+
+<span onclick="openNav()" style="position: absolute;top: 10px;left: 25px;">
+	<script src="Issue1.js"></script>
+	<input type="image" name="Open" src="../images/nav.png" width="50px" height="50px" alt="Open"> 
+</span>
+<div id="mySidenav" class="sidenav">
+  		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+		<a><strong>Undercover Books</strong></a>
+		<br/>
+		<a href="#">Home</a>
+  		<a href="../issuebook/issuebook.html">Issue Book</a>
+		<a href="#">Return Book</a>
+</div>
+
+<span style="position: absolute;top: 0;right: 25px;">
+		<input type="image" name="Open" src="plague-doctor.jpg" width="55px" height="75px" alt="Open" style="border-radius:25px;"> </span>
+
+<script src = "issue.js"></script>		
+<div class="user">
+  <header class="user__header">
+      <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt=""/>
+      <h1 class="user__title" style="color: black;">Issue Book</h1>
+  </header>
+  <form class="form" action="/saveData" method="POST">
+  
+  	  <div class="form__group">
+          <input type="text" id = "Book_name" name = "Book_name" placeholder="Book_name" class="form__input" />
+      </div>
+  		
+      <div class="form__group">
+          <input type="text" id = "User_Id" name = "User_Id" placeholder="Confirm user ID" class="form__input" />
+      </div>
+      
+      <button class="btn" id="Button" name = "button" type="submit">Submit</button>
+  </form>
+</div>

@@ -1,0 +1,11 @@
+{
+  "name": "return",
+  "version": "1.0.0",
+  "description": "Returning a book",
+  "main": "home.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shreya Venugopal, Manav Agarwal, Rishab Kashyap",
+  "license": "ISC"
+}

@@ -1,11 +1,11 @@
 #include "Library.h"
 #include <ctime>
+#include <time.h>
 #include <sqlite3.h>
 #include <stdio.h>
 #include <sstream>
 
 using namespace std;
-extern int transaction_id = 0;
 
 int Issue::User_Books()
 {
@@ -50,9 +50,9 @@ int Issue::User_Books()
 		time_t now = time(0);
 		string issue_date = ctime(&now);
 
-		cout<<"Enter The User Identity number:"<<endl;
-		cin>>userID;
-		cin.ignore();
+//		cout<<"Enter The User Identity number:"<<endl;
+//		cin>>userID;
+//		cin.ignore();
 
 		/* Open database */
 		rc = sqlite3_open("book.db", &db);
@@ -64,7 +64,22 @@ int Issue::User_Books()
 		} 
 		else 
 			fprintf(stderr, "Opened database successfully\n");
-		sql1<<"INSERT INTO TRANSACTIONS VALUES ("<<transaction_id++<<", '"<<status<<"', '"<<issue_date<<"', 0,"<<userID<<","<<book_id<<");UPDATE BOOKS SET Copies="<<number_of_copies<<" WHERE Book_Id="<<book_id;
+		
+		std::ostringstream sql2; 
+		sql2<<"SELECT Book_id FROM BOOKS WHERE Book_name='"<<book_name<<"';";
+		command=sql2.str();
+		rc = sqlite3_prepare_v2(db, command.c_str(), -1, &res, 0);
+    	if (rc == SQLITE_OK)
+        	sqlite3_bind_int(res, 1, 3);
+		else
+        	fprintf(stderr, "Failed to execute statement: %s\n", sqlite3_errmsg(db));
+    	int step = sqlite3_step(res);
+		if (step == SQLITE_ROW) 
+        	book_id=sqlite3_column_int(res, 0);
+		
+		srand(time(0));
+		int transaction_id = rand();
+		sql1<<"INSERT INTO TRANSACTIONS VALUES ("<<transaction_id<<", '"<<status<<"', '"<<issue_date<<"', 0,"<<userID<<","<<book_id<<");UPDATE BOOKS SET Copies="<<number_of_copies<<" WHERE Book_name='"<<book_name<<"';";
 		command=sql1.str();
 		rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
 		if( rc != SQLITE_OK )
