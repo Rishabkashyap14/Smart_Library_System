@@ -1,0 +1,1 @@
+cmd_Release/obj.target/cpphello.node := g++ -o Release/obj.target/cpphello.node -shared -pthread -rdynamic -m64  -Wl,-soname=cpphello.node -Wl,--start-group Release/obj.target/cpphello/cpphello.o -Wl,--end-group 

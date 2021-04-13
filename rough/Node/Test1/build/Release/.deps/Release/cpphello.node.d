@@ -1,0 +1,1 @@
+cmd_Release/cpphello.node := ln -f "Release/obj.target/cpphello.node" "Release/cpphello.node" 2>/dev/null || (rm -rf "Release/cpphello.node" && cp -af "Release/obj.target/cpphello.node" "Release/cpphello.node")

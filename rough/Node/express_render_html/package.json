@@ -1,0 +1,15 @@
+{
+	"name": "express_render_html",
+	"version": "1.0.0",
+	"description": "tutorial to render html with express",
+	"main": "index.js",
+	"scripts": {
+		"dev": "nodemon server.js"
+	},
+	"author": "rishab",
+	"license": "MIT",
+	"dependencies": {
+		"express": "^4.17.1",
+		"nodemon": "^1.19.1"
+	}
+}
