@@ -5,13 +5,13 @@ const { execFile } = require('child_process');
 
 var app = express();
 app.use(bodyParser());
-app.use(express.static(path.join(__dirname, '/')));
+//app.use(express.static(path.join(__dirname, '/')));
 
 app.get('', (req, res) => {
   res.sendFile(path.join(__dirname, './Signup.html'));
 });
 
-const createUser = (User_Id) => {
+const createUser = (User_Id,Name, Password, Email) => {
 	const compiler = "g++";
   	const version = "-std=c++11";
   	const out ="-o";
@@ -26,11 +26,11 @@ const createUser = (User_Id) => {
       console.log(err);
     } else {
       let executable = `./${outfile}`;
-      execFile(executable ,[User_Id,"Manav Agarwal","abc123","manav@email.com"],(err, stdout, stderr) => {
+      execFile(executable ,[User_Id,Name, Password, Email],(err, stdout, stderr) => {
         if (err) {
           console.log(err);
         } else {
-          execFile("echo", [User_Id,"Manav Agarwal","abc123","manav@email.com"], { shell: true }, (err, stdout, stderr) => {
+          execFile("echo", [User_Id,Name, Password, Email], { shell: true }, (err, stdout, stderr) => {
             if (err) {
               console.log(err);
             } else {
@@ -44,13 +44,20 @@ const createUser = (User_Id) => {
 };
 
 app.post('/saveData', (req, res) => {
-    const { user_id } = req.body;
-    create_user(user_id);
+    const { User_Id} = req.body.User_Id;
+    const { Name} = req.body.Name;
+    const { Password} = req.body.Password;
+    const {Email} = req.body.Email;
+    console.log(User_Id);
+    console.log(Name);
+    console.log(Password);
+    console.log(Email);
+    createUser(User_Id);
     return res.send("HELLO DONE")
 })
 
-app.listen(8081, function() {
-  console.log('Server running at http://127.0.0.1:8081/');
+app.listen(8082, function() {
+  console.log('Server running at http://127.0.0.1:8082/');
 });
 
 

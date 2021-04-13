@@ -1,0 +1,32 @@
+{
+  "name": "smart_library_system",
+  "version": "1.0.0",
+  "description": "Smart Library System",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rishabkashyap14/Smart_Library_System.git",
+    "dev": "nodemon ./home/home.js"
+  },
+  "keywords": [
+    "C++",
+    "node",
+    "library"
+  ],
+  "author": "Rishab Kashyap, Manav Agarwal, Shreya Venugopal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rishabkashyap14/Smart_Library_System/issues"
+  },
+  "homepage": "https://github.com/Rishabkashyap14/Smart_Library_System#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "npm": "^7.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}

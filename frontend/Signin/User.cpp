@@ -112,7 +112,7 @@ int User::authenticate_user(void)//, string password)
 
 int User::create_user(string Utype)
 {
-	cout<<"\nNEW USER ENTRY...\n";
+	/*cout<<"\nNEW USER ENTRY...\n";
 	cout<<"Enter The User Identity number:"<<endl;
 	cin>>userID;
 	cin.ignore();
@@ -124,7 +124,7 @@ int User::create_user(string Utype)
 	cin.ignore();
 	cout<<"Enter your email address:\n";
 	cin>>email;
-	cin.ignore();
+	cin.ignore();*/
 	//cout<<"Enter The type of User:\n";
 	//cin>>Utype;
 	//cin.ignore();

@@ -1,3 +1,0 @@
-/home/rishab/roughwork/React/web_api_with_cpp/calculator_back-end/build/CMakeFiles/rebuild_cache.dir
-/home/rishab/roughwork/React/web_api_with_cpp/calculator_back-end/build/CMakeFiles/CalculatorAPI.dir
-/home/rishab/roughwork/React/web_api_with_cpp/calculator_back-end/build/CMakeFiles/edit_cache.dir
