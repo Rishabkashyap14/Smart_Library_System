@@ -1,8 +1,8 @@
 #Makefile for Return Book
-CFLAGS = -g -Wall -lsqlite3
+CFLAGS = -g -Wall
 
 all: return_code_runner.o BookRelatedOperations.o Book.o User.o Utilities.o
-	g++ return_code_runner.o BookRelatedOperations.o Book.o User.o Utilities.o -o test.out $(CFLAGS)
+	g++ $(CFLAGS) return_code_runner.o BookRelatedOperations.o Book.o User.o Utilities.o -o test.out -lsqlite3
 
 return_code_runner.o:
 	g++ -c return_code_runner.cpp

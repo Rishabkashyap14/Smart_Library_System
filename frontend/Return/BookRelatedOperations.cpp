@@ -118,7 +118,20 @@ double Return::Fine(int userID, string book_name)
 	} 
 	else 
 		fprintf(stderr, "Opened database successfully\n");
-	sql<<"SELECT Date FROM TRANSACTIONS where User_id = "<<userID<<" AND Book_name='"<<book_name<<"';";
+	
+	std::ostringstream sql4; 
+	sql4<<"SELECT Book_id FROM BOOKS WHERE Book_name='"<<book_name<<"';";
+	command=sql4.str();
+	rc = sqlite3_prepare_v2(db, command.c_str(), -1, &res, 0);
+	if (rc == SQLITE_OK)
+    	sqlite3_bind_int(res, 1, 3);
+	else
+    	fprintf(stderr, "Failed to execute statement: %s\n", sqlite3_errmsg(db));
+	int step1 = sqlite3_step(res);
+	if (step1 == SQLITE_ROW) 
+    	book_id=sqlite3_column_int(res, 0);
+    	
+	sql<<"SELECT Date FROM TRANSACTIONS where User_id = "<<userID<<" AND Book_id="<<book_id<<";";
 	command=sql.str();
 	rc = sqlite3_prepare_v2(db, command.c_str(), -1, &res, 0);
     	if(rc == SQLITE_OK)
@@ -188,7 +201,20 @@ int Return::Return_Book()
 	} 
 	else 
 		fprintf(stderr, "Opened database successfully\n");
-	sql2<<"UPDATE TRANSACTIONS set Status='Returned' WHERE User_id="<<userID<<";";
+	
+	std::ostringstream sql4; 
+	sql4<<"SELECT Book_id FROM BOOKS WHERE Book_name='"<<book_name<<"';";
+	command=sql4.str();
+	rc = sqlite3_prepare_v2(db, command.c_str(), -1, &res, 0);
+	if (rc == SQLITE_OK)
+    	sqlite3_bind_int(res, 1, 3);
+	else
+    	fprintf(stderr, "Failed to execute statement: %s\n", sqlite3_errmsg(db));
+	int step = sqlite3_step(res);
+	if (step == SQLITE_ROW) 
+    	book_id=sqlite3_column_int(res, 0);
+	
+	sql2<<"UPDATE TRANSACTIONS set Status='Returned' WHERE User_id="<<userID<<" AND Book_id="<<book_id<<";";
 	command=sql2.str();
 	rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
 	if( rc != SQLITE_OK )
