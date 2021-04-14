@@ -1,5 +1,6 @@
 var express = require('express');
 const path = require('path');
+const sqlite3 = require('sqlite3').verbose();
 var bodyParser = require('body-parser');
 const { execFile } = require('child_process');
 
@@ -50,11 +51,31 @@ const returnBook = (User_Id, Book_name) => {
   })
 };
 
+const getFees = (User_Id) => {
+  let db = new sqlite3.Database('book.db', (err) => {
+  if (err) {
+    console.error(err.message);
+  }
+  console.log('Connected to the book database.');
+});
+  db.get(`SELECT Fees FROM USERS WHERE User_id=?`,[User_Id], (err, row) => {
+    if (err) {
+      console.error(err.message);
+    }
+    console.log(row.Fees);
+  });
+  db.close((err) => {
+  if (err) {
+    console.error(err.message);
+  }
+  console.log('Close the database connection.');
+});
+};
+
 app.post('/saveData', (req, res) => {
     const { User_Id, Book_name } = req.body;
-    console.log(User_Id);
-    console.log(Book_name);
     returnBook(User_Id, Book_name);
+    getFees(User_Id);
     res.redirect("/saveData");
 })
 
