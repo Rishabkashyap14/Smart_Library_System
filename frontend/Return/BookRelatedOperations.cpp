@@ -96,7 +96,7 @@ int Issue::User_Books()
 	return 0;
 }
 
-double Return::Fine(int userID, int book_id)
+double Return::Fine(int userID, string book_name)
 {
 	double number_of_days=0; 
 	time_t now = time(0); 
@@ -118,7 +118,7 @@ double Return::Fine(int userID, int book_id)
 	} 
 	else 
 		fprintf(stderr, "Opened database successfully\n");
-	sql<<"SELECT Date FROM TRANSACTIONS where User_id = "<<userID<<" AND Book_id ="<<book_id<<";";
+	sql<<"SELECT Date FROM TRANSACTIONS where User_id = "<<userID<<" AND Book_name='"<<book_name<<"';";
 	command=sql.str();
 	rc = sqlite3_prepare_v2(db, command.c_str(), -1, &res, 0);
     	if(rc == SQLITE_OK)
@@ -153,7 +153,7 @@ int Return::Return_Book()
 	sqlite3_stmt *res;
 	char *zErrMsg = 0;
 	int rc;
-	std::ostringstream sql;
+	std::ostringstream sql1;
 	std::string command;
 	if(x>=7)
 	{
@@ -168,8 +168,8 @@ int Return::Return_Book()
 		} 
 		else 
 			fprintf(stderr, "Opened database successfully\n");
-		sql<<"UPDATE USERS set Fees ="<<x<<" WHERE User_id="<<userID<<";";
-		command=sql.str();
+		sql1<<"UPDATE USERS set Fees ="<<x<<" WHERE User_id="<<userID<<";";
+		command=sql1.str();
 		rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
 		if( rc != SQLITE_OK )
 		{
@@ -180,6 +180,7 @@ int Return::Return_Book()
 	}
 	/* Open database */
 	rc = sqlite3_open("book.db", &db);
+	std::ostringstream sql2;
 	if(rc) 
 	{
 		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
@@ -187,8 +188,17 @@ int Return::Return_Book()
 	} 
 	else 
 		fprintf(stderr, "Opened database successfully\n");
-	sql<<"UPDATE TRANSACTIONS set Status='Returned' WHERE User_id="<<userID<<";";
-	command=sql.str();
+	sql2<<"UPDATE TRANSACTIONS set Status='Returned' WHERE User_id="<<userID<<";";
+	command=sql2.str();
+	rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
+	if( rc != SQLITE_OK )
+	{
+		fprintf(stderr, "SQL error: %s\n", zErrMsg);
+		sqlite3_free(zErrMsg);
+	}
+	std::ostringstream sql3;
+	sql3<<"UPDATE BOOKS SET Copies=Copies+1 WHERE Book_name='"<<book_name<<"';";
+	command=sql3.str();
 	rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
 	if( rc != SQLITE_OK )
 	{
