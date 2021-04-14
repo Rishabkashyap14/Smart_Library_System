@@ -94,7 +94,7 @@ class Return: public Book, public User
 			return_date="";
 			transaction_id=0;
 		};
-		double Fine(int userID, string book_name);
+		double Fine();
 		
 		//Extra Function
 		int Return_Book();//to update database
@@ -152,7 +152,7 @@ class Administrator : public Return
 			cout<<"Enter the bookID: \n";
 			cin>>book_id;
 			cin.ignore();
-			cout<<Return::Fine(userID, book_name);
+			cout<<Return::Fine();
 		};
 };
 

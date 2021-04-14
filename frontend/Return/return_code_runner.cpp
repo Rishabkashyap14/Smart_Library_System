@@ -9,6 +9,7 @@ int main(int argc, const char* argv[]) {
     R.userID= atoi(argv[1]);
     R.book_name = argv[2];    
     int x = R.Return_Book();
+    double y = R.Fine(); 
   }
 
   std::cout << "Book returned successfully" << std::endl;
