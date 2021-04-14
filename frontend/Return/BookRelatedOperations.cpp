@@ -193,14 +193,6 @@ int Return::Return_Book()
 	}
 	/* Open database */
 	rc = sqlite3_open("book.db", &db);
-	std::ostringstream sql2;
-	if(rc) 
-	{
-		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-		return(0);
-	} 
-	else 
-		fprintf(stderr, "Opened database successfully\n");
 	
 	std::ostringstream sql4; 
 	sql4<<"SELECT Book_id FROM BOOKS WHERE Book_name='"<<book_name<<"';";
@@ -213,18 +205,19 @@ int Return::Return_Book()
 	int step = sqlite3_step(res);
 	if (step == SQLITE_ROW) 
     	book_id=sqlite3_column_int(res, 0);
-	
-	sql2<<"UPDATE TRANSACTIONS set Status='Returned' WHERE User_id="<<userID<<" AND Book_id="<<book_id<<";";
-	command=sql2.str();
-	rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
-	if( rc != SQLITE_OK )
+    sqlite3_close(db);	
+    	
+	rc = sqlite3_open("book.db", &db);
+	std::ostringstream sql2;
+	if(rc) 
 	{
-		fprintf(stderr, "SQL error: %s\n", zErrMsg);
-		sqlite3_free(zErrMsg);
-	}
-	std::ostringstream sql3;
-	sql3<<"UPDATE BOOKS SET Copies=Copies+1 WHERE Book_name='"<<book_name<<"';";
-	command=sql3.str();
+		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+		return(0);
+	} 
+	else 
+		fprintf(stderr, "Opened database successfully\n");
+	sql2<<"UPDATE TRANSACTIONS set Status='Returned' WHERE User_id="<<userID<<" AND Book_id="<<book_id<<"; UPDATE BOOKS SET Copies=Copies+1 WHERE Book_name='"<<book_name<<"';";
+	command=sql2.str();
 	rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
 	if( rc != SQLITE_OK )
 	{
