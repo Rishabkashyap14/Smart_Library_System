@@ -142,13 +142,13 @@ double Return::Fine(int userID, int book_id)
 }
 int Return::Return_Book()
 {
-	cout<<"Enter the userID: \n";
-	cin>>userID;
-	cin.ignore();
-	cout<<"Enter the bookID: \n";
-	cin>>book_id;
-	cin.ignore();
-	double x = Fine(userID, book_id);
+//	cout<<"Enter the userID: \n";
+//	cin>>userID;
+//	cin.ignore();
+//	cout<<"Enter the bookID: \n";
+//	cin>>book_id;
+//	cin.ignore();
+	double x = Fine(userID, book_name);
 	sqlite3 *db;
 	sqlite3_stmt *res;
 	char *zErrMsg = 0;
