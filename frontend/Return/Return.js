@@ -51,6 +51,7 @@ const returnBook = (User_Id, Book_name) => {
   })
 };
 
+/*
 const getFees = (User_Id) => {
   let db = new sqlite3.Database('book.db', (err) => {
   if (err) {
@@ -71,6 +72,24 @@ const getFees = (User_Id) => {
   console.log('Close the database connection.');
 });
 };
+*/
+
+/*
+const getFees = (User_Id) => {
+	let db = new sqlite3.Database('./book.db');
+	let sql = `SELECT Fees FROM TRANSACTIONS WHERE User_id = ?`;
+	let Fees=0;
+	
+	db.get(sql, [User_Id], (err, row) => {
+		if(err) {
+			return console.error(err.message);
+		}
+	return row
+		? console.log(row.Fees)
+		: console.log(`No Fees found with the user`);
+	db.close();
+});
+*/
 
 app.post('/saveData', (req, res) => {
     const { User_Id, Book_name } = req.body;
