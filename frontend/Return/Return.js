@@ -3,6 +3,7 @@ const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
 var bodyParser = require('body-parser');
 const { execFile } = require('child_process');
+const Alert = require("js-alert");
 
 var app = express();
 app.use(bodyParser());
@@ -49,52 +50,58 @@ const returnBook = (User_Id, Book_name) => {
       })
     }
   })
+  return 1;
 };
 
-/*
-const getFees = (User_Id) => {
-  let db = new sqlite3.Database('book.db', (err) => {
-  if (err) {
-    console.error(err.message);
-  }
-  console.log('Connected to the book database.');
-});
-  db.get(`SELECT Fees FROM USERS WHERE User_id=?`,[User_Id], (err, row) => {
-    if (err) {
-      console.error(err.message);
-    }
-    console.log(row.Fees);
-  });
-  db.close((err) => {
-  if (err) {
-    console.error(err.message);
-  }
-  console.log('Close the database connection.');
-});
-};
-*/
 
-/*
 const getFees = (User_Id) => {
-	let db = new sqlite3.Database('./book.db');
-	let sql = `SELECT Fees FROM TRANSACTIONS WHERE User_id = ?`;
-	let Fees=0;
-	
-	db.get(sql, [User_Id], (err, row) => {
-		if(err) {
-			return console.error(err.message);
-		}
-	return row
-		? console.log(row.Fees)
-		: console.log(`No Fees found with the user`);
-	db.close();
+  	let db = new sqlite3.Database('book.db', (err) => {
+ 		if (err) {
+    		console.error(err.message);
+  		}
+  		console.log('Connected to the book database.');
+	});
+  	let sql =`SELECT Fees FROM USERS WHERE User_id=?`;
+  	db.all(sql, 	[User_Id], (err, row) => {
+    	if (err) {
+      		console.error(err.message);
+    	}
+    	console.log(row.Fees);
+    	console.log('Inserted fees successfully');
+  	});
+  	db.close((err) => {
+  		if (err) {
+    		console.error(err.message);
+  		}
+  	console.log('Close the database connection.');
+	});
+};
+
+// open the database
+let db = new sqlite3.Database('./book.db');
+
+let sql = `SELECT Author FROM BOOKS ORDER BY Book_id`;
+
+db.all(sql, [], (err, rows) => {
+        if (err)
+        {
+                throw err;
+        }
+        rows.forEach((row) => {
+                console.log(row.Author);
+        });
 });
-*/
+
+// close the database connection
+db.close();
 
 app.post('/saveData', (req, res) => {
     const { User_Id, Book_name } = req.body;
-    returnBook(User_Id, Book_name);
-    getFees(User_Id);
+    if(returnBook(User_Id, Book_name))
+    {
+    	getFees(User_Id);
+    }
+    Alert.alert("Data has been modified");
     res.redirect("/saveData");
 })
 

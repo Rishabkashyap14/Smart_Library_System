@@ -11,7 +11,11 @@ app.get('', (req, res) => {
   res.sendFile(path.join(__dirname, './test.html'));
 });
 
-const addBook = (Book_id) => {
+app.get('/saveData', (req, res) => {
+  res.sendFile(path.join(__dirname, './home.html'));
+});
+
+const addBook = (Book_id, Book_name, Author, Book_Description, Copies) => {
   const compiler = "g++";
   const version = "-std=c++11";
   const out ="-o";
@@ -26,11 +30,11 @@ const addBook = (Book_id) => {
       console.log(err);
     } else {
       let executable = `./${outfile}`;
-      execFile(executable ,[Book_id,"Mathilda","Roald Dahl","Bleh","20"],(err, stdout, stderr) => {
+      execFile(executable ,[Book_id, Book_name, Author, Book_Description, Copies],(err, stdout, stderr) => {
         if (err) {
           console.log(err);
         } else {
-          execFile("echo", [Book_id,"Mathilda","Roald Dahl","Bleh","20"], { shell: true }, (err, stdout, stderr) => {
+          execFile("echo", [Book_id, Book_name, Author, Book_Description, Copies], { shell: true }, (err, stdout, stderr) => {
             if (err) {
               console.log(err);
             } else {
@@ -44,9 +48,9 @@ const addBook = (Book_id) => {
 };
 
 app.post('/saveData', (req, res) => {
-    const { book_id } = req.body;
-    addBook(book_id);
-    return res.send("HELLO DONE")
+    const { Book_id, Book_name, Author, Book_Description, Copies } = req.body;
+    addBook(Book_id, Book_name, Author, Book_Description, Copies);
+    res.redirect("/saveData")
 })
 
 app.listen(8080, function() {
