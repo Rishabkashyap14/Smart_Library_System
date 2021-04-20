@@ -2,7 +2,7 @@
 <head>
 	<title>Testing HTML CSS</title>
 	<link rel="stylesheet" href="test.css">
-	<script src="remove_book.js"></script>
+	<script src="Node.js"></script>
 </head>
 <body style="test.css">
 	 <span onclick="openNav()" style="position: absolute;top: 5px ;left: 5px; height: 200px; width: 50px;">
@@ -12,11 +12,11 @@
   		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 		<a><strong>Undercover Books</strong></a>
 		<br/>
-		<a href="../home/home.html">Home</a>
+		<a href="./home.html">Home</a>
   		<a href="#">Add Book</a>
   		<a href="#">Remove Book</a>
   		<a href="#">Update Book</a>
-  		<a href="../issuebook/issuebook.html">Issue Book</a>
+  		<a href="./Issuebook.html">Issue Book</a>
 		<a href="#">Return Book</a>
 	</div>
 	<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page --> 
@@ -24,7 +24,8 @@
 	  <h2>
 		  Delete Book
 	  </h2>
-	  <form action="/saveData" method="POST">
+<!--	  <form onsubmit="handleSubmit(event)"> -->
+	  <form action="/Remove" method="POST">
 		<label for="Book_id">Book Identity number to Delete<em>&#x2a;</em></label>
 		<input id="Book_id" name="Book_id" required="" type="text" />
 		<br/>
@@ -33,8 +34,24 @@
 		<br/>
 		<button type="submit" id="customerOrder">SUBMIT</button>
 	  </form>
+	<p id="output"></p>
 	</div>ad
 	<span style="position: absolute;top: 0;right: 25px;  height: 200px; width: 50px;">
-		<input type="image" name="Open" src="../images/plague-doctor.jpg" width="75px" height="65px" alt="Open" style="border-radius:25px;"> 
+		<input type="image" name="Open" src="plague-doctor.jpg" width="75px" height="65px" alt="Open" style="border-radius:25px;"> 
 	</span>
+	<!--
+	<script>
+		const handleSubmit = (event => {
+			event.preventDefault();
+			let id = document.getElementById("Book_id").value;
+			fetch(`/getData?Book_id=${id}`).then(res=>res.json()).then(res => {
+				console.log(res);
+				let e = document.getElementById("output");
+				let k = (Object.keys(res.output).map( key => `${key}:${res.output[key]}`)).join("\n");
+				console.log(k);
+				e.innerHTML = k;
+			});
+		})
+	</script> -->
 </body>
+</html>

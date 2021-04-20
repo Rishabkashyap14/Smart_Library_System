@@ -3,7 +3,6 @@ const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
 var bodyParser = require('body-parser');
 const { execFile } = require('child_process');
-const Alert = require("js-alert");
 
 var app = express();
 app.use(bodyParser());
@@ -101,7 +100,6 @@ app.post('/saveData', (req, res) => {
     {
     	getFees(User_Id);
     }
-    Alert.alert("Data has been modified");
     res.redirect("/saveData");
 })
 

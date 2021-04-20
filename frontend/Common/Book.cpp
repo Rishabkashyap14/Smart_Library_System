@@ -13,6 +13,7 @@ using namespace std;
 
 int Book::add_book()
 {
+/*
 	cout<<"\nNEW BOOK ENTRY...\n";
 	cout<<"Enter The Book Identity number:\n";//should this be generated
 	cin>>book_id;
@@ -28,14 +29,14 @@ int Book::add_book()
 		availability=1;
 	cout<<"Enter Description:\n";
 	getline(cin,description);
-
+*/
 	sqlite3 *db;
 	char *zErrMsg = 0;
 	int rc;
 	std::ostringstream sql;
 	std::string command;
 	/* Open database */
-   	rc = sqlite3_open("../book.db", &db);
+   	rc = sqlite3_open("./book.db", &db);
    	if( rc ) 
 	{
 		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
@@ -75,7 +76,7 @@ int Book::remove_book()
 	std::ostringstream sql;
 	std::string command;
 	/* Open database */
-   	rc = sqlite3_open("../book.db", &db);
+   	rc = sqlite3_open("./book.db", &db);
    	if( rc ) 
 	{
 		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
@@ -163,10 +164,10 @@ int Book::modify_book()
 
 int Book::print_info()
 {
-	cout<<"\nPRINT BOOK INFORMATION...\n";
-	cout<<"Enter The Book Identity number:\n";//should this be generated
-	cin>>book_id;
-	cin.ignore();
+	//cout<<"\nPRINT BOOK INFORMATION...\n";
+	//cout<<"Enter The Book Identity number:\n";//should this be generated
+	//cin>>book_id;
+	//cin.ignore();
 	sqlite3 *db;
 	char *zErrMsg = 0;
 	int rc;
@@ -174,6 +175,7 @@ int Book::print_info()
 	std::string command;
 	/* Open database */
    	rc = sqlite3_open("book.db", &db);
+   	/*
    	if( rc ) 
 	{
 		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
@@ -181,16 +183,19 @@ int Book::print_info()
 	} 
 	else 
 		fprintf(stderr, "Opened database successfully\n");
+	*/
 	/* Create SQL statement */
 	sql<<"SELECT * FROM BOOKS WHERE Book_Id="<<book_id;
 	command=sql.str();
 	/* Execute SQL statement */
-	rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
+	rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg); 
+	/*  
 	if( rc != SQLITE_OK )
 	{
 		fprintf(stderr, "SQL error: %s\n", zErrMsg);
 		sqlite3_free(zErrMsg);
 	} 
+	*/
 	sqlite3_close(db);
 	return 0;
 }
