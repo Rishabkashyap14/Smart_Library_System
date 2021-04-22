@@ -62,51 +62,6 @@ int User::authenticate_user(void)//, string password)
 			cout<<"Successful Authentication!\n\n";
 	}
 	return 1;
-	/*while(1)
-	{
-		if(cin.fail())
-		{
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-			cout<<"You have entered an invalid input, try again:"<<endl;
-			cin>>userID;
-			attempt++;
-		}
-		if(!cin.fail() && attempt<3)
-			break;
-		if(attempt>1)
-		{
-			cout<<"Three incorrect tries, cannot proceed"<<endl;
-			exit(0);
-		}
-	}*/
-	//Successful UserID entered
-	//Try-Catch for wrong password, (Need more test cases)
-	/*try{
-		cout<<"Enter the password"<<endl;
-		cin>>password;
-	}
-	catch(bad_alloc& e){
-		cout<<e.what()<<"Invalid password size"<<endl;
-	}*/
-	/*sqlite3 *db;
-	char *zErrMsg = 0;
-	int rc;
-	std::ostringstream sql;
-	std::string command;
-	rc=sqlite3_open("book.db",&db);
-	if(rc) 
-	{
-		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-		return(0);
-	} 
-	else 
-		fprintf(stderr, "Opened database successfully\n");
-	sql<< "SELECT name from USERS WHERE User_id="<<userID<<" AND password='"<<password<<"'";
-	command=sql.str();*/
-	/* Execute SQL statement */
-	//rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);
-	//cout<<rc;
 	
 }
 
