@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<head>
+	<title>Testing HTML CSS</title>
+	<link rel="stylesheet" href="home.css">
+</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="home.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="calc_fees.js"></script>
+
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+</style>
+
+<body style="home.css">
+	<span onclick="openNav()" style="position: absolute;top: 5px ;left: 5px; height: 200px; width: 50px;">
+		<input type="image" name="Open" src="nav.png" alt="Open"></input>
+	</span>
+<h1> Transaction Almost Complete!! </h1>
+<h2> Re-Confirm Details to finish the transaction</h2>
+	<form class="form" action="/calcFine" method="POST">  
+  	  	<div class="form__group">  	  
+  	  	<div class="form__group">
+      	    <input type="text" id = "User_Id" name = "User_Id" placeholder="Confirm user ID" class="form__input" />
+    	  </div>  	  
+       	  	<input type="text" id = "Book_name" name = "Book_name" placeholder="Confirm the BookName" class="form__input" />
+      	</div>          
+      		<button class="btn" id="Button" name = "button" type="submit">Submit</button>
+		</form>
+<marquee> !!!Please visit Again!!! </marquee>
+</body>
+</html>

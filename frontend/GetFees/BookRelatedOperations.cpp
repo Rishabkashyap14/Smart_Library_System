@@ -246,10 +246,11 @@ int Return::Return_Fine()
 	sqlite3_stmt *res;
 	char *zErrMsg = 0;
 	int rc;
+	std::ostringstream sql1;
 	std::string command;
-	rc = sqlite3_open("book.db", &db);
+	c = sqlite3_open("book.db", &db);
 	std::ostringstream sql;
-	sql<<"SELECT Fees FROM USERS WHERE User_id="<<userID<<";";
+	sql<<"SELECT Fees FROM USERS WHERE User_id="<<user_id<<" AND Book_name='"<<book_name<<"';";
 	command=sql.str();
 	rc = sqlite3_exec(db, command.c_str(), callback, 0, &zErrMsg);   
 	sqlite3_close(db);

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<head>
+	<title>Testing HTML CSS</title>
+	<link rel="stylesheet" href="test.css">
+</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="home.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="display.js"></script>
+
+<body style="test.css">
+	<span onclick="openNav()" style="position: absolute;top: 5px ;left: 5px; height: 200px; width: 50px;">
+		<input type="image" name="Open" src="nav.png" alt="Open"></input>
+	</span>
+	<div class="contact-us" style="width:450px;height:500px;border:1px solid #FAFCC2; background-color : #f4ebc1;border-radius: 25px; animation: arrive 500ms ease-in-out 0.9s forwards;"  >
+		<h2> Displaying Fees </h2>
+	<form class="form" onsubmit="handleSubmit(event)">  
+  	  	<div class="form__group">  	  
+  	  	<div class="form__group">
+      	    <input type="text" id = "User_id" name = "User_id" placeholder="User_id" class="form__input" />
+    	  </div>  	  
+      		<button class="btn" id="Button" name = "button" type="submit">Display</button>
+      	<h3> FEES : </h3><p id="output"></p><br>
+		</form>
+		<script>
+		const handleSubmit = (event => {
+			event.preventDefault();
+			let id1 = document.getElementById("User_id").value;
+			fetch(`/displayFees?User_id=${id1}`).then(res=>res.json()).then(res => {
+				console.log(res);
+				let e = document.getElementById("output");
+				let k = (Object.keys(res.output).map( key => `${key}:${res.output[key]}`)).join("\n");
+				console.log(k);
+				e.innerHTML = k;
+			});
+		})
+	</script>
+	</div>
+	<br><br>
+<button type="submit" id="HomePage" name="HomePage"><a href="/saveData">Back to HomePage</a></button>
+</body>
+</html>

@@ -28,21 +28,21 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 <span style="position: absolute;top: 0;right: 25px;">
 		<input type="image" name="Open" src="plague-doctor.jpg" width="55px" height="75px" alt="Open" style="border-radius:25px;"> </span>
 
-<script src = "Node.js"></script>		
+<script src = "Return.js"></script>		
 <div class="user">
   <header class="user__header">
       <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt=""/>
       <h1 class="user__title" style="color: black;">Return Book</h1>
   </header>
-  <form class="form" action="/Return" method="POST">
+  <form class="form" action="/saveData" method="POST">
   
   	  <div class="form__group">
   	  
   	  <div class="form__group">
-          <input type="text" id = "User_Id" name = "User_Id" placeholder="Enter user ID" class="form__input" />
+          <input type="text" id = "User_Id" name = "User_Id" placeholder="Confirm user ID" class="form__input" />
       </div>
   	  
-          <input type="text" id = "Book_name" name = "Book_name" placeholder="Enter the Book Name" class="form__input" />
+          <input type="text" id = "Book_name" name = "Book_name" placeholder="Book_name" class="form__input" />
       </div>
           
       <button class="btn" id="Button" name = "button" type="submit">Submit</button>

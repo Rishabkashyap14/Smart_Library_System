@@ -30,7 +30,7 @@ app.get('/Issue', (req, res) => {
 });
 
 app.get('/Return', (req, res) => {
-  res.sendFile(path.join(__dirname, './home.html'));
+  res.sendFile(path.join(__dirname, './CalcFine.html'));
 });
 
 app.get('/Add', (req, res) => {
@@ -41,8 +41,8 @@ app.get('/Remove', (req, res) => {
   res.sendFile(path.join(__dirname, './home.html'));
 });
 
-app.get('/BookInfo', (req, res) => {
-  res.sendFile(path.join(__dirname, './Display_book.html'));
+app.get('/calcFine', (req, res) => {
+  res.sendFile(path.join(__dirname, './home.html'));
 });
 
 
@@ -232,8 +232,72 @@ const displayBook = async(Book_id) => {
               return(stdout);
 };
 
+const getFine = (User_id, Book_name) => {
+	const compiler = "g++";
+  	const version = "-std=c++11";
+  	const out ="-o";
+  	const infile = "calcFees_code_runner.cpp";
+  	const otherfile1 = "User.cpp";
+  	const otherfile2 = "Book.cpp";
+  	const otherfile3 = "BookRelatedOperations.cpp";
+  	const utilities = "Utilities.cpp"
+  	const outfile = "calcFees_code_runner.out";
+  	const flags = "-lsqlite3";
+  
+  execFile(compiler, [version, infile, otherfile1, otherfile2, otherfile3, utilities, out, outfile, flags], (err, stdout, stderr) => {
+    if (err) {
+      console.log(err);
+    } else {
+      let executable = `./${outfile}`;
+      execFile(executable ,[User_id, Book_name],(err, stdout, stderr) => {
+        if (err) {
+          console.log(err);
+        } else {
+          execFile("echo", [User_id, Book_name], { shell: true }, (err, stdout, stderr) => {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log(`what is printed to the console: ${stdout}`);
+            }
+          });
+        }
+      })
+    }
+  })
+};
+
+const displayFees = async (User_id) => {
+	const compiler = "g++";
+  	const version = "-std=c++11";
+  	const out ="-o";
+  	const infile = "displayFees_code_runner.cpp";
+  	const otherfile1 = "User.cpp";
+  	const otherfile2 = "Book.cpp";
+  	const otherfile3 = "BookRelatedOperations.cpp";
+  	const utilities = "Utilities.cpp"
+  	const outfile = "displayFees_code_runner.out";
+  	const flags = "-lsqlite3";
+  
+  await execFile_1(compiler, [version,infile, otherfile1, otherfile2, otherfile3, utilities, out, outfile, flags])
+      let executable = `./${outfile}`;
+      const { stdout, stderr } = await execFile_1(executable ,[User_id])
+              console.log(`what is printed to the console: ${stdout}`);
+              return(stdout);
+};
 
 /* get functions for printing info*/
+app.get('/displayFees', async (req, res) => {
+  const { User_id } = req.query;
+  let output = await displayFees(User_id);
+  output = (output.split("\n"));
+  let obj = {}
+  output.filter(line => line!='')
+  output.map(line => { x = line.split("="); obj[x[0]?x[0].trim(): x[0]] = x[1]?x[1].trim(): x[1]});
+  console.log(obj);
+  res.json({output : obj})
+})
+
+
 app.get('/getData', async (req, res) => {
   const { Book_id } = req.query;
   let output = await displayBook(Book_id);
@@ -244,6 +308,8 @@ app.get('/getData', async (req, res) => {
   console.log(obj);
   res.json({output : obj})
 })
+
+
 
 /*Posting Function data online*/
 app.post('/Signup', (req, res) => {
@@ -282,6 +348,12 @@ app.post('/Remove', (req, res) => {
     const { Book_id, Book_name } = req.body;
     removeBook(Book_id, Book_name);
     res.redirect("/Remove");
+})
+
+app.post('/calcFine', (req, res) => {
+    const { User_id, Book_name } = req.body;
+    getFine(User_id, Book_name);
+    res.redirect("/calcFine");
 })
 
 app.post('/Home', (req, res) => {
