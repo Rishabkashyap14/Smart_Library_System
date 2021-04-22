@@ -3,6 +3,10 @@ const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
 var bodyParser = require('body-parser');
 const { execFile } = require('child_process');
+const util = require('util');
+//const { execFile_1 : exec } = require('child_process');
+const execFile_1 = util.promisify(execFile);
+
 
 var app = express();
 app.use(bodyParser());
@@ -36,6 +40,11 @@ app.get('/Add', (req, res) => {
 app.get('/Remove', (req, res) => {
   res.sendFile(path.join(__dirname, './home.html'));
 });
+
+app.get('/BookInfo', (req, res) => {
+  res.sendFile(path.join(__dirname, './Display_book.html'));
+});
+
 
 /* Functions */
 const createUser = (User_Id, Name, Password, Email) => {
@@ -205,6 +214,37 @@ const removeBook = (Book_id, Book_name) => {
   })
 };
 
+const displayBook = async(Book_id) => {
+  const compiler = "g++";
+  const version = "-std=c++11";
+  const out ="-o";
+  const infile = "displayBook_code_runner.cpp";
+  const otherfile = "Book.cpp";
+  const utilities = "Utilities.cpp"
+  const outfile = "displayBook_code_runner.out";
+  const flags = "-lsqlite3"
+  var output;
+
+  await execFile_1(compiler, [version,infile, otherfile, utilities, out, outfile, flags])
+      let executable = `./${outfile}`;
+      const { stdout, stderr } = await execFile_1(executable ,[Book_id])
+              console.log(`what is printed to the console: ${stdout}`);
+              return(stdout);
+};
+
+
+/* get functions for printing info*/
+app.get('/getData', async (req, res) => {
+  const { Book_id } = req.query;
+  let output = await displayBook(Book_id);
+  output = (output.split("\n"));
+  let obj = {}
+  output.filter(line => line!='')
+  output.map(line => { x = line.split("="); obj[x[0]?x[0].trim(): x[0]] = x[1]?x[1].trim(): x[1]});
+  console.log(obj);
+  res.json({output : obj})
+})
+
 /*Posting Function data online*/
 app.post('/Signup', (req, res) => {
 	console.log(req.body);
@@ -242,6 +282,10 @@ app.post('/Remove', (req, res) => {
     const { Book_id, Book_name } = req.body;
     removeBook(Book_id, Book_name);
     res.redirect("/Remove");
+})
+
+app.post('/Home', (req, res) => {
+    res.redirect("/Home")
 })
 
 app.listen(8080, function() {
