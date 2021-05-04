@@ -4,7 +4,7 @@ This is a simple Object Oriented Application that follows the rules of Software 
 ## What does it consists of?
 1. Front-End: HTML, CSS, JS
 2. Middleware: NodeJS
-3. Backend: C++;
+3. Backend: C++
 4. Databade: SQLite
 
 ## Executing the application
