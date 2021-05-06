@@ -1,4 +1,4 @@
-# Smart_Library_System
+# Smart Library System
 This is a simple Object Oriented Application that follows the rules of Software Engineering and Design. The project consists of simple functionalities such as addition of books, removal of books, issue/return then and even display the information of existing books.
 
 ## What does it consists of?
