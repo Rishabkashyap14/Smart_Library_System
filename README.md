@@ -5,7 +5,7 @@ This is a simple Object Oriented Application that follows the rules of Software 
 1. Front-End: HTML, CSS, JS
 2. Middleware: NodeJS
 3. Backend: C++
-4. Databade: SQLite
+4. Database: SQLite
 
 ## Executing the application
 - The Application currently works on Linux Systems and MacOS systems as some of the functionalities weren't supported for Windows.
